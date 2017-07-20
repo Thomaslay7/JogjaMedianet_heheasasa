@@ -12,18 +12,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".splash">
+        <activity android:name=".login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login" />
         <activity android:name=".Register" />
         <activity android:name=".Home" />
         <activity android:name=".RegistrasiPelanggan" />
         <activity android:name=".ListPelanggan"></activity>
+
+        <activity android:name=".Report"></activity>
     </application>
 
 </manifest>

@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,12 +26,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jogjamedianet.com.jogjamedianet.App.AppController;
+import jogjamedianet.com.jogjamedianet.Preferences.SessionManager;
+import jogjamedianet.com.jogjamedianet.Prefs.UserInfo;
+import jogjamedianet.com.jogjamedianet.Prefs.UserSession;
 import jogjamedianet.com.jogjamedianet.Util.Server;
 
 public class login extends AppCompatActivity {
 
 
-
+        private UserSession session;
+        private UserInfo userinfo;
 
         ProgressDialog pDialog;
         Button btn_register, btn_login;
@@ -37,6 +43,7 @@ public class login extends AppCompatActivity {
         Intent intent;
 
         int success;
+        String user,id;
         ConnectivityManager conMgr;
 
         private String url = Server.URL + "login.php";
@@ -47,6 +54,12 @@ public class login extends AppCompatActivity {
         private static final String TAG_MESSAGE = "message";
 
         public final static String TAG_USERNAME = "username";
+
+        public final static String TAG_NAMADEPAN = "NamaDepan";
+        public final static String TAG_NAMABELAKANG = "NamaBelakang";
+        public final static String TAG_JENISKELAMIN = "JenisKelamin";
+        public final static String TAG_JABATAN = "Jabatan";
+
         public final static String TAG_ID = "id";
 
         String tag_json_obj = "json_obj_req";
@@ -71,6 +84,17 @@ public class login extends AppCompatActivity {
             btn_register = (Button) findViewById(R.id.btn_register);
             txt_username = (EditText) findViewById(R.id.txt_username);
             txt_password = (EditText) findViewById(R.id.txt_password);
+
+            // Session manager
+          //  session = new UserSession(getApplicationContext());
+            userinfo = new UserInfo(getApplicationContext());
+            // Check if user is already logged in or not
+            if (userinfo.isLoggedin()) {
+                // User is already logged in. Take him to main activity
+                Intent intent = new Intent(login.this, Home.class);
+                startActivity(intent);
+                finish();
+            }
 
             btn_login.setOnClickListener(new View.OnClickListener() {
 
@@ -109,11 +133,22 @@ public class login extends AppCompatActivity {
 
         }
 
-        private void checkLogin(final String username, final String password) {
+    public void setPasswordVisibility(View v)
+    {
+        EditText txtPassword = (EditText)findViewById(R.id.txt_password);
+        CheckBox ckpas=(CheckBox)findViewById(R.id.checkBox);
+        if(ckpas.isChecked())
+            txtPassword.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        else
+            txtPassword.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+    }
+
+    private void checkLogin(final String username, final String password) {
             pDialog = new ProgressDialog(this);
             pDialog.setCancelable(false);
             pDialog.setMessage("Logging in ...");
             showDialog();
+
 
             StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -128,17 +163,38 @@ public class login extends AppCompatActivity {
 
                         // Check for error node in json
                         if (success == 1) {
+
                             String username = jObj.getString(TAG_USERNAME);
-                            String id = jObj.getString(TAG_ID);
+                            String namadepan = jObj.getString(TAG_NAMADEPAN);
+                            String namabelakang = jObj.getString(TAG_NAMABELAKANG);
+                            String jeniskelamin = jObj.getString(TAG_JENISKELAMIN);
+                            String jabatan = jObj.getString(TAG_JABATAN);
+
+
+
+
 
                             Log.e("Successfully Login!", jObj.toString());
                             Toast.makeText(getApplicationContext() ,"Welcome!", Toast.LENGTH_LONG).show();
                             Toast.makeText(getApplicationContext(),
                                     jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 
+                            userinfo.setLoggin(true);
+
                             Intent intent = new Intent(login.this,Home.class);
-                            intent.putExtra(TAG_ID, id);
-                            intent.putExtra(TAG_USERNAME, username);
+
+
+                         //  intent.putExtra(TAG_ID, id);
+                           // intent.putExtra(TAG_USERNAME, username);
+
+
+                            userinfo.setId(id);
+                            userinfo.setUsername(username);
+                            userinfo.setNamadepan(namadepan);
+                            userinfo.setNamaBelakang(namabelakang);
+                            userinfo.setJenisKelamin(jeniskelamin);
+                            userinfo.setJabatan(jabatan);
+
                             finish();
                             startActivity(intent);
                         } else {

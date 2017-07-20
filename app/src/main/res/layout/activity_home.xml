@@ -9,6 +9,103 @@
     android:background="@drawable/bg2"
     android:weightSum="1">
 
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#00CED1"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#afb8cc"
+        android:paddingTop="20dp"
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
+
+        <ImageView
+            android:layout_width="176dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageView5"
+            android:src="@drawable/jogjamedianetlogo"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1.52" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary" >
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/key_namadepan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NamaDepan"
+        android:textSize="20sp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="68dp" />
+
+    <TextView
+        android:id="@+id/key_namabelakang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NamaBelakang"
+        android:textSize="20sp"
+        android:layout_marginStart="24dp"
+        android:layout_alignTop="@+id/key_namadepan"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/key_jabatan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Jabatan"
+        android:textSize="20sp"
+
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/key_jeniskelamin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="jeniskelamin"
+        android:textSize="20sp"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/key_jabatan"
+        android:layout_alignParentStart="true" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Report"
+        android:id="@+id/btnReport"
+        android:textColorHighlight="@color/colorAccent"
+        android:background="@color/accent_material_light"
+        android:layout_below="@+id/key_jeniskelamin"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp" />
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
@@ -18,14 +115,29 @@
         tools:background="@android:color/black"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         app:itemBackground="@color/colorBackground"
         app:itemIconTint="#FFFF"
         app:itemTextColor="#FFFF"
-        app:menu="@menu/menu"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        app:menu="@menu/menu" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Data Pegawai   :"
+        android:id="@+id/textView2"
+        android:textColor="#fff"
+        android:textSize="15dp"
+        android:gravity="center_vertical|left"
+        android:layout_marginLeft="20dp"
+        android:layout_above="@+id/key_namabelakang"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout" />
+
 </RelativeLayout>

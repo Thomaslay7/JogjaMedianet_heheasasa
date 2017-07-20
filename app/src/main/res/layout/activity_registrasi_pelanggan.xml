@@ -1,31 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg2"
-    android:weightSum="1"
-    tools:context="jogjamedianet.com.jogjamedianet.RegistrasiPelanggan">
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bg">
 
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/tb_main"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:background="@android:color/black"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
+   <ScrollView
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="0sp"
+    android:layout_weight="5" >
+    <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemBackground="@color/colorBackground"
-        app:itemIconTint="#FFFF"
-        app:itemTextColor="#FFFF"
-        app:menu="@menu/menu"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/namaperusahaan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Nama Perusahaan"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/JenisUsaha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Jenis Usaha"
+            android:layout_below="@+id/namaperusahaan"
+            android:layout_alignParentStart="true" />
+
+
+
+        <EditText
+            android:id="@+id/namapelanggan2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Nama Pelanggan"
+            android:layout_below="@+id/JenisUsaha"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/alamatpelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/namapelanggan2"
+            android:layout_marginTop="13dp"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:hint="Alamat" />
+
+        <EditText
+            android:id="@+id/KelPelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Kelurahan Pelanggan"
+            android:layout_below="@+id/alamatpelanggan"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="11dp" />
+
+        <EditText
+            android:id="@+id/KecPelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/KelPelanggan"
+            android:layout_below="@+id/KelPelanggan"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Kecamatan Pelanggan" />
+
+        <EditText
+            android:id="@+id/kotapelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/KecPelanggan"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Kota Pelanggan" />
+
+        <EditText
+            android:id="@+id/kodepospelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Kode Pos Pelanggan"
+            android:layout_below="@+id/kotapelanggan"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/notlppelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="No Telepon Pelanggan"
+            android:layout_below="@+id/kodepospelanggan"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/nofaxpelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="No Fax Pelanggan"
+            android:layout_below="@+id/notlppelanggan"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/nohppelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="No Hp Pelanggan"
+            android:layout_below="@+id/nofaxpelanggan"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/emailpelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Email Pelanggan"
+            android:layout_below="@+id/nohppelanggan"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Lahir :"
+            android:id="@+id/textView"
+            android:layout_below="@+id/emailpelanggan"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:hint="DD/MM/YYYY"
+            android:ems="10"
+            android:id="@+id/txttgllahir"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentStart="true" />
+
+        <ListView
+            android:id="@+id/jkelaminpelanggan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:entries="@array/jklaminpel"
+            android:layout_below="@+id/carapembayaran"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/pekerjaanpelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Pekerjaan Pelanggan"
+            android:layout_below="@+id/waktupembayaran"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/noidpelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="No Identitas Pelanggan"
+            android:layout_below="@+id/statustempattinggal"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/nonpwp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="No NPWP Pelanggan"
+            android:layout_below="@+id/noidpelanggan"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/jenislayanan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Layanan"
+            android:layout_below="@+id/nonpwp"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/namapenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Nama Penagih"
+            android:layout_below="@+id/jenislayanan"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/alamatpenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Alamat Penagih"
+            android:layout_below="@+id/namapenagih"
+            android:layout_alignParentStart="true" />
+
+
+
+
+
+
+        <EditText
+            android:id="@+id/KelPenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Kelurahan Penagih"
+            android:layout_below="@+id/alamatpelanggan"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="11dp" />
+
+        <EditText
+            android:id="@+id/KecPenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/KelPelanggan"
+            android:layout_below="@+id/KelPenagih"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Kecamatan Penagih" />
+
+        <EditText
+            android:id="@+id/kotapenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/KecPenagih"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Kota Penagih" />
+
+        <EditText
+            android:id="@+id/kodepospenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Kode Pos Penagih"
+            android:layout_below="@+id/kotapenagih"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/notlppenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="No Telepon Penagih"
+            android:layout_below="@+id/kodepospenagih"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/nofaxpenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="No Fax Penagih"
+            android:layout_below="@+id/notlppenagih"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/nohppenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="No Hp Penagih"
+            android:layout_below="@+id/nofaxpenagih"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/emailpenagih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Email Penagih"
+            android:layout_below="@+id/nohppenagih"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/carapembayaran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Cara Pembayaran"
+            android:layout_below="@+id/txttgllahir"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/waktupembayaran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Waktu Pembayaran"
+            android:layout_below="@+id/jkelaminpelanggan"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/statustempattinggal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Status Tempat Tinggal"
+            android:layout_below="@+id/pekerjaanpelanggan"
+            android:layout_alignParentStart="true" />
+        <Button
+            android:id="@+id/enterpelanggan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Entry Data"
+            android:background="@color/colorAccent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/statustempattinggal"
+            />
+
+
+    </LinearLayout>
+
+</ScrollView>
+</LinearLayout>
+
+

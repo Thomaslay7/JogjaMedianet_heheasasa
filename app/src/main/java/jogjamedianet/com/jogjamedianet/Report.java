@@ -1,17 +1,14 @@
 package jogjamedianet.com.jogjamedianet;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class splash extends AppCompatActivity {
-
-    @Override
+/**
+ * Created by mery on 7/13/2017.
+ */
+public class Report extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = new Intent(this, login.class);
-        startActivity(intent);
-        finish();
+        setContentView(R.layout.report);
     }
 }
