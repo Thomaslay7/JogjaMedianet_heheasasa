@@ -164,6 +164,7 @@ public class login extends AppCompatActivity {
                         // Check for error node in json
                         if (success == 1) {
 
+                            String id=jObj.getString((TAG_ID));
                             String username = jObj.getString(TAG_USERNAME);
                             String namadepan = jObj.getString(TAG_NAMADEPAN);
                             String namabelakang = jObj.getString(TAG_NAMABELAKANG);
@@ -180,7 +181,12 @@ public class login extends AppCompatActivity {
                                     jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 
                             userinfo.setLoggin(true);
-
+                            userinfo.setId(id);
+                            userinfo.setUsername(username);
+                            userinfo.setNamadepan(namadepan);
+                            userinfo.setNamaBelakang(namabelakang);
+                            userinfo.setJenisKelamin(jeniskelamin);
+                            userinfo.setJabatan(jabatan);
                             Intent intent = new Intent(login.this,Home.class);
 
 
@@ -188,12 +194,7 @@ public class login extends AppCompatActivity {
                            // intent.putExtra(TAG_USERNAME, username);
 
 
-                            userinfo.setId(id);
-                            userinfo.setUsername(username);
-                            userinfo.setNamadepan(namadepan);
-                            userinfo.setNamaBelakang(namabelakang);
-                            userinfo.setJenisKelamin(jeniskelamin);
-                            userinfo.setJabatan(jabatan);
+
 
                             finish();
                             startActivity(intent);

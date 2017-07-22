@@ -14,13 +14,14 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/view3">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#00CED1"
+            android:background="#707c8f"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -30,7 +31,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#afb8cc"
+        android:background="#6e7a8c"
         android:paddingTop="20dp"
         android:weightSum="1"
         android:id="@+id/linearLayout">
@@ -45,41 +46,32 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorPrimary" >
 
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/key_namadepan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NamaDepan"
-        android:textSize="20sp"
-        android:layout_below="@+id/linearLayout"
+
+        android:layout_above="@+id/key_jabatan"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="68dp" />
+        android:layout_marginBottom="49dp" />" />
 
     <TextView
         android:id="@+id/key_namabelakang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NamaBelakang"
-        android:textSize="20sp"
-        android:layout_marginStart="24dp"
+
         android:layout_alignTop="@+id/key_namadepan"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_toEndOf="@+id/txtjkl" />
 
     <TextView
         android:id="@+id/key_jabatan"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jabatan"
-        android:textSize="20sp"
 
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
@@ -90,22 +82,20 @@
         android:layout_height="wrap_content"
 
         android:text="jeniskelamin"
-        android:textSize="20sp"
-        android:layout_marginTop="29dp"
-        android:layout_below="@+id/key_jabatan"
+        android:layout_below="@+id/txtjkl"
         android:layout_alignParentStart="true" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Report"
+        android:text="      REPORT       "
+        android:background="@drawable/buttonshape"
         android:id="@+id/btnReport"
         android:textColorHighlight="@color/colorAccent"
-        android:background="@color/accent_material_light"
         android:layout_below="@+id/key_jeniskelamin"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
+        android:layout_marginTop="37dp" />
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
@@ -121,23 +111,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorBackground"
+        app:itemBackground="@color/colorBlue"
         app:itemIconTint="#FFFF"
         app:itemTextColor="#FFFF"
         app:menu="@menu/menu" />
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Nama Lengkap Pegawai :"
+        android:id="@+id/txtnamalengkap"
+        android:layout_above="@+id/key_namadepan"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Jabatan :"
+        android:id="@+id/txtjbtan"
+        android:layout_above="@+id/key_jabatan"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Jenis Kelamin :"
+        android:id="@+id/txtjkl"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/key_jabatan"
+        android:layout_alignParentStart="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Data Pegawai   :"
+        android:text="Data Pegawai"
         android:id="@+id/textView2"
         android:textColor="#fff"
-        android:textSize="15dp"
-        android:gravity="center_vertical|left"
-        android:layout_marginLeft="20dp"
-        android:layout_above="@+id/key_namabelakang"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout" />
+
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/txtnamalengkap" />
 
 </RelativeLayout>

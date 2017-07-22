@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/bg">
 
-   <ScrollView
+    <ScrollView
     android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="0sp"
@@ -154,20 +155,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="date"
-            android:hint="DD/MM/YYYY"
+            android:hint="YYYY/MM/DD"
             android:ems="10"
             android:id="@+id/txttgllahir"
             android:layout_below="@+id/textView"
             android:layout_alignParentStart="true" />
 
-        <ListView
-            android:id="@+id/jkelaminpelanggan"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Jenis Kelamin :"
+            android:layout_below="@+id/txttgllahir"
+
+            android:id="@+id/textView2"
+
+            />
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:ems="10"
-            android:entries="@array/jklaminpel"
-            android:layout_below="@+id/carapembayaran"
-            android:layout_alignParentStart="true" />
+            android:id="@+id/radioGroup"
+            >
+
+
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laki - laki"
+                android:id="@+id/rbLakilaki"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:checked="false"
+                />
+
+
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perempuan"
+                android:id="@+id/rbPerempuan"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="0dp"
+                android:checked="false"
+                android:layout_alignTop="@+id/rbLakilaki"
+                android:layout_alignEnd="@+id/view"
+                />
+
+
+
+        </RadioGroup>
 
         <EditText
             android:id="@+id/pekerjaanpelanggan"
@@ -206,107 +244,8 @@
             android:hint="Layanan"
             android:layout_below="@+id/nonpwp"
             android:layout_alignParentStart="true" />
-        <EditText
-            android:id="@+id/namapenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Nama Penagih"
-            android:layout_below="@+id/jenislayanan"
-            android:layout_alignParentStart="true" />
-        <EditText
-            android:id="@+id/alamatpenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Alamat Penagih"
-            android:layout_below="@+id/namapenagih"
-            android:layout_alignParentStart="true" />
 
 
-
-
-
-
-        <EditText
-            android:id="@+id/KelPenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Kelurahan Penagih"
-            android:layout_below="@+id/alamatpelanggan"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="11dp" />
-
-        <EditText
-            android:id="@+id/KecPenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/KelPelanggan"
-            android:layout_below="@+id/KelPenagih"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Kecamatan Penagih" />
-
-        <EditText
-            android:id="@+id/kotapenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/KecPenagih"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Kota Penagih" />
-
-        <EditText
-            android:id="@+id/kodepospenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Kode Pos Penagih"
-            android:layout_below="@+id/kotapenagih"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:id="@+id/notlppenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="No Telepon Penagih"
-            android:layout_below="@+id/kodepospenagih"
-            android:layout_alignParentStart="true" />
-        <EditText
-            android:id="@+id/nofaxpenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="No Fax Penagih"
-            android:layout_below="@+id/notlppenagih"
-            android:layout_alignParentStart="true" />
-        <EditText
-            android:id="@+id/nohppenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="No Hp Penagih"
-            android:layout_below="@+id/nofaxpenagih"
-            android:layout_alignParentStart="true" />
-        <EditText
-            android:id="@+id/emailpenagih"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Email Penagih"
-            android:layout_below="@+id/nohppenagih"
-            android:layout_alignParentStart="true" />
         <EditText
             android:id="@+id/carapembayaran"
             android:layout_width="wrap_content"
@@ -347,10 +286,20 @@
             android:layout_below="@+id/statustempattinggal"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text=""
+            android:id="@+id/txtIdPegawai"
+            android:layout_gravity="right"
+            android:layout_weight="5" />
+
 
     </LinearLayout>
 
 </ScrollView>
+
+
 </LinearLayout>
 
 

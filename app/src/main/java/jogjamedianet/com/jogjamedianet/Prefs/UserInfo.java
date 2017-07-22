@@ -12,8 +12,8 @@ import java.util.HashMap;
 public class UserInfo {
     private static final String TAG = UserSession.class.getSimpleName();
     private static final String PREF_NAME = "userinfo";
-    private static final String KEY_IS_LOGGED_IN = "isLoggedin";
-    private static final String KEY_ID = "ID";
+    private static final String KEY_IS_LOGGED_IN = "IsLoggedIn";
+    private static final String KEY_ID = "ID_Pegawai";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_NAMA_DEPAN = "NamaDepan";
     private static final String KEY_NAMA_BELAKANG = "NamaBelakang";

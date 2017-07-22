@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,12 +41,15 @@ public class RegistrasiPelanggan extends AppCompatActivity {
     EditText txtnamapenagih,txtalamatpenagih,txtkelpenagih,txtkecpenagih,txtkotapenagih,txtkodepospenagih,txtnotlppenagih;
     EditText txtnofaxpenagih,txtnohppenagih,txtemailpenagih,txtcarapembayaran,txtwaktupembayaran,txtstatustempattinggal,tgllahir;
     Button masukandatapel;
-    ListView lvjkpelanggan;
+    TextView txtIdPeg;
+    private RadioGroup radioSexGroup;
+    private RadioButton rbP;
+    private RadioButton rbL;
     Intent intent;
     int success;
     int position;
     ConnectivityManager conMgr;
-    UserInfo session;
+    private UserInfo session;
 
     private String url = Server.URL + "RegistrasiPelanggan.php";
 
@@ -56,12 +60,16 @@ public class RegistrasiPelanggan extends AppCompatActivity {
 
     String tag_json_obj = "json_obj_req";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrasi_pelanggan);
 
 
+        session = new UserInfo(getApplicationContext());
+
+        session  = new UserInfo(this);
 
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {
@@ -91,28 +99,22 @@ public class RegistrasiPelanggan extends AppCompatActivity {
         txtnoidpelanggan = (EditText) findViewById(R.id.noidpelanggan);
         txtnonpwp = (EditText) findViewById(R.id.nonpwp);
         txtjenislayanan= (EditText) findViewById(R.id.jenislayanan);
-        txtnamapenagih= (EditText) findViewById(R.id.namapenagih);
-        txtalamatpenagih= (EditText) findViewById(R.id.alamatpenagih);
-        txtkelpenagih= (EditText) findViewById(R.id.KelPenagih);
-        txtkecpenagih= (EditText) findViewById(R.id.KecPenagih);
-        txtkotapenagih= (EditText) findViewById(R.id.kotapenagih);
-        txtkodepospenagih= (EditText) findViewById(R.id.kodepospenagih);
-        txtnotlppenagih= (EditText) findViewById(R.id.notlppenagih);
-        txtnofaxpenagih= (EditText) findViewById(R.id.nofaxpenagih);
-        txtnohppenagih= (EditText) findViewById(R.id.nohppenagih);
-        txtemailpenagih= (EditText) findViewById(R.id.emailpenagih);
         txtcarapembayaran= (EditText) findViewById(R.id.carapembayaran);
         txtwaktupembayaran= (EditText) findViewById(R.id.waktupembayaran);
         txtstatustempattinggal= (EditText) findViewById(R.id.statustempattinggal);
-        lvjkpelanggan = (ListView) findViewById(R.id.jkelaminpelanggan);
+        radioSexGroup=(RadioGroup)findViewById(R.id.radioGroup);
         tgllahir = (EditText) findViewById(R.id.txttgllahir);
+        rbP=(RadioButton)findViewById(R.id.rbPerempuan);
+        rbL=(RadioButton)findViewById(R.id.rbLakilaki);
+        txtIdPeg=(TextView)findViewById(R.id.txtIdPegawai);
 
         masukandatapel.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                String jklpelanggan = (String) lvjkpelanggan.getItemAtPosition(position);
+
+
                 String namaperusahaan = txtnamaperusahaan.getText().toString();
                 String jenisusaha = txtjenisusaha.getText().toString();
                 String namapelanggan = txtnamapelanggan.getText().toString();
@@ -120,35 +122,37 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                 String kelurahanpelanggan = txtkelpelanggan.getText().toString();
                 String kecamatanpelanggan = txtkecpelanggan.getText().toString();
                 String kotapelanggan = txtkotapelanggan.getText().toString();
-                int kodepospelanggan= Integer.parseInt(txtkodepospelanggan.getText().toString());
-                int notlppelanggan= Integer.parseInt(txtnotlppelanggan.getText().toString());
-                int nofaxpelanggan= Integer.parseInt(txtnofaxpelanggan.getText().toString());
-                int nohppelanggan= Integer.parseInt(txtnohppelanggan.getText().toString());
+                String kodepospelanggan= txtkodepospelanggan.getText().toString();
+                String notlppelanggan= txtnotlppelanggan.getText().toString();
+                String nofaxpelanggan= txtnofaxpelanggan.getText().toString();
+                String nohppelanggan= txtnohppelanggan.getText().toString();
                 String emailpelanggan = txtemailpelanggan.getText().toString();
                 String tgllahirpelanggan = tgllahir.getText().toString();
                 String pekerjaanpelanggan = txtpekerjaanpelanggan.getText().toString();
-                int noidpelanggan= Integer.parseInt(txtnoidpelanggan.getText().toString());
-                int nonpwppelanggan= Integer.parseInt(txtnonpwp.getText().toString());
+                String noidpelanggan= txtnoidpelanggan.getText().toString();
+                String nonpwppelanggan= txtnonpwp.getText().toString();
                 String jenislayanan= txtjenislayanan.getText().toString();
-                String namapenagih = txtnamapenagih.getText().toString();
-                String alamatpenagih= txtalamatpenagih.getText().toString();
-                int kodepospenagih= Integer.parseInt(txtkodepospenagih.getText().toString());
-                int notlppenagih= Integer.parseInt(txtnotlppenagih.getText().toString());
-                int nofaxpenagih= Integer.parseInt(txtnofaxpenagih.getText().toString());
-                int nohppenagih= Integer.parseInt(txtnohppenagih.getText().toString());
-                String emailpenagih = txtemailpenagih.getText().toString();
                 String carapembayaran  = txtcarapembayaran.getText().toString();
                 String waktupembayaran = txtwaktupembayaran.getText().toString();
                 String tempattinggal = txtstatustempattinggal.getText().toString();
-                String idPegawai ;
-                idPegawai = session.getKeyID();
 
+                String jeniskelaminS="";
+                if(rbL.isChecked()) {
+                    jeniskelaminS= "Laki - laki";
+                }
+                else if(rbP.isChecked()) {
+                    jeniskelaminS= "Perempuan";
+                }
+
+                String idPgw ;
+                idPgw = session.getKeyID().toString();
+               // session.setId(idPgw);
                 if (conMgr.getActiveNetworkInfo() != null
                         && conMgr.getActiveNetworkInfo().isAvailable()
                         && conMgr.getActiveNetworkInfo().isConnected()) {
                     checkRegisterPelanggan(namaperusahaan,jenisusaha,namapelanggan,alamatpelanggan,kelurahanpelanggan,kecamatanpelanggan,kotapelanggan,kodepospelanggan
-                            ,notlppelanggan,nofaxpelanggan,nohppelanggan,emailpelanggan ,tgllahirpelanggan,jklpelanggan,pekerjaanpelanggan,noidpelanggan,nonpwppelanggan,jenislayanan
-                            ,namapenagih,alamatpenagih,kodepospenagih,notlppenagih,nofaxpenagih,nohppenagih,emailpenagih,carapembayaran,waktupembayaran,tempattinggal,idPegawai);
+                            ,notlppelanggan,nofaxpelanggan,nohppelanggan,emailpelanggan ,tgllahirpelanggan,jeniskelaminS,pekerjaanpelanggan,noidpelanggan,nonpwppelanggan,jenislayanan
+                            ,carapembayaran,waktupembayaran,tempattinggal,idPgw);
                 } else {
                     Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }
@@ -160,9 +164,9 @@ public class RegistrasiPelanggan extends AppCompatActivity {
 
     }
 
-    private void checkRegisterPelanggan(final String namaperusahaan,final String jenisusaha,final String namapelanggan,final String alamatpelanggan, final String kelurahanpelanggan,final String kecamatanpelanggan, final String kotapelanggan, final int kodepospelanggan
-            ,final int notlppelanggan,final int nofaxpelanggan,final int nohppelanggan,final String emailpelanggan ,final String tgllahirpelanggan,final String jklpelanggan,final String pekerjaanpelanggan,final int noidpelanggan,final int nonpwppelanggan,final String jenislayanan
-            ,final String namapenagih,final String alamatpenagih,final int kodepospenagih,final int notlppenagih,final int nofaxpenagih,final int nohppenagih,final String emailpenagih,final String carapembayaran,final String waktupembayaran,final String tempattinggal,final String idPegawai) {
+    private void checkRegisterPelanggan(final String namaperusahaan,final String jenisusaha,final String namapelanggan,final String alamatpelanggan, final String kelurahanpelanggan,final String kecamatanpelanggan, final String kotapelanggan, final  String kodepospelanggan
+            ,final  String notlppelanggan,final  String nofaxpelanggan,final  String nohppelanggan,final String emailpelanggan ,final String tgllahirpelanggan,final String jklpelanggan,final String pekerjaanpelanggan,final  String noidpelanggan,final  String nonpwppelanggan,final String jenislayanan
+            ,final String carapembayaran,final String waktupembayaran,final String tempattinggal,final String idPegawai) {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Register ...");
@@ -189,10 +193,9 @@ public class RegistrasiPelanggan extends AppCompatActivity {
 
 
                         Intent intent = new Intent(RegistrasiPelanggan.this,Home.class);
-                     /*   txt_username.setText("");
-                        txt_password.setText("");
-                        txt_confirm_password.setText("");
-                    */
+
+                        finish();
+                        startActivity(intent);
                     } else {
                         Toast.makeText(getApplicationContext(),
                                 jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
@@ -222,34 +225,27 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("namaperusahaan", namaperusahaan);
-                params.put("jenisusaha", jenisusaha);
-                params.put("namapelanggan", namapelanggan);
+                params.put("jenis_usaha", jenisusaha);
+                params.put("nama_pelanggan", namapelanggan);
                 params.put("alamatpelanggan",alamatpelanggan );
-                params.put("kelurahanpelanggan", kelurahanpelanggan);
-                params.put("kecamatanpelanggan", kecamatanpelanggan);
-                params.put("kotapelanggan", kotapelanggan);
-                params.put("kodepospelanggan", String.valueOf(kodepospelanggan));
-                params.put("notlppelanggan", String.valueOf(notlppelanggan));
-                params.put("nofaxpelanggan", String.valueOf(nofaxpelanggan));
-                params.put("nohppelanggan", String.valueOf(nohppelanggan));
+                params.put("kelurahan_pelanggan", kelurahanpelanggan);
+                params.put("kec_pelanggan", kecamatanpelanggan);
+                params.put("kota_pelanggan", kotapelanggan);
+                params.put("kodepos_pelanggan", String.valueOf(kodepospelanggan));
+                params.put("no_telp_pelanggan", String.valueOf(notlppelanggan));
+                params.put("no_fax_pelanggan", String.valueOf(nofaxpelanggan));
+                params.put("no_hp_pelanggan", String.valueOf(nohppelanggan));
                 params.put("emailpelanggan", emailpelanggan);
-                params.put("tgllahirpelanggan", tgllahirpelanggan);
-                params.put("jklpelanggan", jklpelanggan);
-                params.put("pekerjaanpelanggan", pekerjaanpelanggan);
-                params.put("noidpelanggan", String.valueOf(noidpelanggan));
-                params.put("nonpwppelanggan", String.valueOf(nonpwppelanggan));
-                params.put("jenislayanan", jenislayanan);
-                params.put("namapenagih", namapenagih);
-                params.put("alamatpenagih", alamatpenagih);
-                params.put("kodepospenagih", String.valueOf(kodepospenagih));
-                params.put("notlppenagih", String.valueOf(notlppenagih));
-                params.put("nofaxpenagih", String.valueOf(nofaxpenagih));
-                params.put("nohppenagih", String.valueOf(nohppenagih));
-                params.put("emailpenagih", emailpenagih);
-                params.put("carapembayaran", carapembayaran);
-                params.put("waktupembayaran", waktupembayaran);
-                params.put("tempattinggal", tempattinggal);
-
+                params.put("tanggal_lahir_pelanggan", tgllahirpelanggan);
+                params.put("jenis_kelamin_pelanggan", jklpelanggan);
+                params.put("pekerjaan", pekerjaanpelanggan);
+                params.put("no_identitas", String.valueOf(noidpelanggan));
+                params.put("NPWP", String.valueOf(nonpwppelanggan));
+                params.put("layanan", jenislayanan);
+                params.put("cara_pembayaran", carapembayaran);
+                params.put("waktu_pembayaran", waktupembayaran);
+                params.put("status_tempat_tinggal", tempattinggal);
+                params.put("ID_Pegawai", idPegawai);
                 // how to parse this one ?? (integer)
 
 

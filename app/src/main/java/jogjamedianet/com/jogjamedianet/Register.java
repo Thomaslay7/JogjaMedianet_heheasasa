@@ -103,9 +103,9 @@ public class Register extends AppCompatActivity {
                 String confirm_password = txt_confirm_password.getText().toString();
                 String jeniskelaminS="";
                 if(rbL.isChecked()) {
-                    jeniskelaminS= "Pria";
+                    jeniskelaminS= "Laki - laki";
                 }else if(rbP.isChecked()) {
-                    jeniskelaminS= "Wanita";
+                    jeniskelaminS= "Perempuan";
                 }
 
                 if (conMgr.getActiveNetworkInfo() != null
