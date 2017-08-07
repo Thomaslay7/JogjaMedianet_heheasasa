@@ -19,14 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".login" />
         <activity android:name=".Register" />
         <activity android:name=".Home" />
         <activity android:name=".RegistrasiPelanggan" />
-        <activity android:name=".ListPelanggan"></activity>
+        <activity android:name=".ListPelanggan" />
+        <activity android:name=".Report" />
 
-        <activity android:name=".Report"></activity>
+
     </application>
 
 </manifest>

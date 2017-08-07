@@ -198,10 +198,6 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                                 jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 
 
-                        Intent intent = new Intent(RegistrasiPelanggan.this,Home.class);
-                        startActivity(intent);
-                        finish();
-
                     } else {
                         Toast.makeText(getApplicationContext(),
                                 jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();

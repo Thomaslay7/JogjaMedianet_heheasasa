@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context="jogjamedianet.com.jogjamedianet.Home"
     android:background="@drawable/bg2"
-    android:weightSum="1">
+    android:weightSum="1"
+    >
 
 
 
@@ -16,13 +17,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:id="@+id/view3">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#707c8f"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -53,7 +48,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NamaDepan"
+        android:textSize="15dp"
 
+        android:textColor="@color/colorPrimaryDark"
         android:layout_above="@+id/key_jabatan"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="49dp" />" />
@@ -63,7 +60,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NamaBelakang"
+        android:textSize="15dp"
 
+        android:textColor="@color/colorPrimaryDark"
         android:layout_alignTop="@+id/key_namadepan"
         android:layout_toEndOf="@+id/txtjkl" />
 
@@ -72,7 +71,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jabatan"
+        android:textSize="15dp"
 
+        android:textColor="@color/colorPrimaryDark"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
@@ -80,7 +81,8 @@
         android:id="@+id/key_jeniskelamin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:textSize="15dp"
+android:textColor="@color/colorPrimaryDark"
         android:text="jeniskelamin"
         android:layout_below="@+id/txtjkl"
         android:layout_alignParentStart="true" />
@@ -93,9 +95,8 @@
         android:background="@drawable/buttonshape"
         android:id="@+id/btnReport"
         android:textColorHighlight="@color/colorAccent"
-        android:layout_below="@+id/key_jeniskelamin"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="37dp" />
+        android:layout_above="@+id/tb_main"
+        android:layout_toStartOf="@+id/textView2" />
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
@@ -111,11 +112,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorBlue"
+        app:itemBackground="@color/colorBackground"
         app:itemIconTint="#FFFF"
         app:itemTextColor="#FFFF"
         app:menu="@menu/menu" />
     <TextView
+        android:textSize="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -129,11 +131,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Jabatan :"
         android:id="@+id/txtjbtan"
+        android:textSize="15dp"
+
         android:layout_above="@+id/key_jabatan"
         android:layout_alignParentStart="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Jenis Kelamin :"
         android:id="@+id/txtjkl"
@@ -147,9 +152,18 @@
         android:text="Data Pegawai"
         android:id="@+id/textView2"
         android:textColor="#fff"
-
+        android:shadowColor="@color/colorAccent"
+        android:textSize="18dp"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/txtnamalengkap" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogOut"
+        android:id="@+id/btnLogOut"
+        android:layout_above="@+id/tb_main"
+        android:layout_toEndOf="@+id/textView2" />
 
 </RelativeLayout>

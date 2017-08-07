@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,20 +13,11 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-import jogjamedianet.com.jogjamedianet.Preferences.SessionManager;
 import jogjamedianet.com.jogjamedianet.Prefs.UserInfo;
-import jogjamedianet.com.jogjamedianet.Prefs.UserSession;
-
 public class Home extends AppCompatActivity {
 
-    TextView txt_id, txt_username;
-    String id, username;
-    SessionManager sessions;
-    private Button logout;
+    private Button logout,btnlogout;
     private TextView tvUsername, tvjabatan,tvnamadepan,tvnamabelakang,tvjeniskelamin;
-
-    private UserSession userSession;
-
     private UserInfo userinfo;
 
     public static final String TAG_ID = "id";
@@ -41,20 +33,12 @@ public class Home extends AppCompatActivity {
         userinfo = new UserInfo(getApplicationContext());
 
         userinfo        = new UserInfo(this);
-        userSession     = new UserSession(this);
         logout          = (Button)findViewById(R.id.btnReport);
-        tvnamadepan         = (TextView)findViewById(R.id.key_namadepan);
-        tvnamabelakang         = (TextView)findViewById(R.id.key_namabelakang);
-        tvjeniskelamin         = (TextView)findViewById(R.id.key_jeniskelamin);
-        tvjabatan         = (TextView)findViewById(R.id.key_jabatan);
-
-
-/*        if(!userSession.isUserLoggedin()){
-           startActivity(new Intent(this, login.class));
-            finish();
-        }
-*/
-        HashMap<String, String> user = userinfo.getUserDetails();
+        btnlogout       =(Button) findViewById(R.id.btnLogOut);
+        tvnamadepan     = (TextView)findViewById(R.id.key_namadepan);
+        tvnamabelakang  = (TextView)findViewById(R.id.key_namabelakang);
+        tvjeniskelamin   = (TextView)findViewById(R.id.key_jeniskelamin);
+        tvjabatan       = (TextView)findViewById(R.id.key_jabatan);
 
       // String username = userinfo.getKeyUsername();
         String namaDepan = userinfo.getKeyNamaDepan();
@@ -71,14 +55,20 @@ public class Home extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
-                                          startActivity(new Intent(Home.this, login.class));
-                                          userinfo.clearUserInfo();
+                                          startActivity(new Intent(Home.this, Report.class));
+
                                           finish();
                                       }
                                   });
 
-         //   id = getIntent().getStringExtra(TAG_ID);
-           // username = getIntent().getStringExtra(TAG_USERNAME);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this, login.class));
+                userinfo.clearUserInfo();
+                finish();
+            }
+        });
 
             BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
@@ -89,7 +79,7 @@ public class Home extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.action_favorites:
 
-                                intent = new Intent(Home.this, ListPelanggan.class);
+                                intent = new Intent(Home.this,ListPelanggan.class);
                                 startActivity(intent);
                                 break;
 
@@ -98,7 +88,7 @@ public class Home extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case R.id.action_music:
-                                intent = new Intent(Home.this, ListPelanggan.class);
+                                intent = new Intent(Home.this, Home.class);
                                 startActivity(intent);
                                 break;
 
@@ -108,12 +98,34 @@ public class Home extends AppCompatActivity {
                 });
     }
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    /*
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-            case R.id.action_settings:
+         //   case R.id.action_settings:
                 // Code you want run when activity is clicked
-
+                int id = item.getItemId();
+                if (id == R.id.action_settings) {
+                    return true;
+                }
                 userinfo.setLoggin(false);
                 userinfo.clearUserInfo();
                 return  true;
@@ -121,6 +133,6 @@ public class Home extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+*/
 }
 

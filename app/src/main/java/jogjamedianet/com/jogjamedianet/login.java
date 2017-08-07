@@ -26,15 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jogjamedianet.com.jogjamedianet.App.AppController;
-import jogjamedianet.com.jogjamedianet.Preferences.SessionManager;
 import jogjamedianet.com.jogjamedianet.Prefs.UserInfo;
-import jogjamedianet.com.jogjamedianet.Prefs.UserSession;
 import jogjamedianet.com.jogjamedianet.Util.Server;
 
 public class login extends AppCompatActivity {
 
 
-        private UserSession session;
+
         private UserInfo userinfo;
 
         ProgressDialog pDialog;
@@ -226,7 +224,7 @@ public class login extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     // Posting parameters to login url
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("username", username);
+                    params.put("username",username);
                     params.put("password", password);
 
                     return params;
