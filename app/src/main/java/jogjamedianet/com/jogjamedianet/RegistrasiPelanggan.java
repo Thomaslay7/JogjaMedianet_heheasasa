@@ -155,9 +155,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                             ,carapembayaran,waktupembayaran,tempattinggal,idPgw);
 
 
-                    intent = new Intent(RegistrasiPelanggan.this, Home.class);
-                    finish();
-                    startActivity(intent);
+
 
                 } else {
                     Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -193,7 +191,9 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                     if (success == 1) {
 
                         Log.e("Successfully Register!", jObj.toString());
-
+                        intent = new Intent(RegistrasiPelanggan.this, ListPelanggan.class);
+                        finish();
+                        startActivity(intent);
                         Toast.makeText(getApplicationContext(),
                                 jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 

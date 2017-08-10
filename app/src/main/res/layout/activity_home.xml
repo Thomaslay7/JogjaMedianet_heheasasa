@@ -161,9 +161,11 @@ android:textColor="@color/colorPrimaryDark"
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LogOut"
+        android:text="  LogOut  "
         android:id="@+id/btnLogOut"
         android:layout_above="@+id/tb_main"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_toEndOf="@+id/textView2"
+        android:textColor="@color/colorAccent"
+        android:background="@drawable/buttonshape"/>
 
 </RelativeLayout>
