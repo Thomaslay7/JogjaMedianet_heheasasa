@@ -1,5 +1,7 @@
 package jogjamedianet.com.jogjamedianet;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,8 +42,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
     ProgressDialog pDialog;
     EditText txtnamaperusahaan,txtjenisusaha,txtnamapelanggan,txtalamatpelanggan,txtkelpelanggan,txtkecpelanggan,txtkotapelanggan,txtkodepospelanggan,txtnotlppelanggan;
     EditText txtnofaxpelanggan,txtnohppelanggan,txtemailpelanggan,txtpekerjaanpelanggan,txtnoidpelanggan,txtnonpwp,txtjenislayanan;
-    EditText txtnamapenagih,txtalamatpenagih,txtkelpenagih,txtkecpenagih,txtkotapenagih,txtkodepospenagih,txtnotlppenagih;
-    EditText txtnofaxpenagih,txtnohppenagih,txtemailpenagih,txtcarapembayaran,txtwaktupembayaran,txtstatustempattinggal,tgllahir;
+ private    EditText txtnofaxpenagih,txtnohppenagih,txtemailpenagih,txtcarapembayaran,txtwaktupembayaran,txtstatustempattinggal,tgllahir;
     Button masukandatapel;
     TextView txtIdPeg;
     private RadioGroup radioSexGroup;
@@ -54,7 +57,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
     private String url = Server.URL + "RegistrasiPelanggan.php";
 
     private static final String TAG = RegistrasiPelanggan.class.getSimpleName();
-
+    public static  final int DATE_DIALOG_ID=0;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
 
@@ -107,7 +110,15 @@ public class RegistrasiPelanggan extends AppCompatActivity {
         rbP=(RadioButton)findViewById(R.id.rbPerempuan);
         rbL=(RadioButton)findViewById(R.id.rbLakilaki);
         txtIdPeg=(TextView)findViewById(R.id.txtIdPegawai);
+        tgllahir.setOnTouchListener(new View.OnTouchListener(){
+            public boolean onTouch (View v, MotionEvent event)
+            {
+                if(v==tgllahir)
 
+                    showDialog(DATE_DIALOG_ID);
+                return false;
+            }
+        });
         masukandatapel.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -127,6 +138,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                 String nofaxpelanggan= txtnofaxpelanggan.getText().toString();
                 String nohppelanggan= txtnohppelanggan.getText().toString();
                 String emailpelanggan = txtemailpelanggan.getText().toString();
+
                 String tgllahirpelanggan = tgllahir.getText().toString();
                 String pekerjaanpelanggan = txtpekerjaanpelanggan.getText().toString();
                 String noidpelanggan= txtnoidpelanggan.getText().toString();
@@ -167,7 +179,29 @@ public class RegistrasiPelanggan extends AppCompatActivity {
         });
 
     }
+    protected Dialog onCreateDialog(int id)
+    {
+        Calendar c= Calendar.getInstance();
+        int cyear=c.get(Calendar.YEAR);
+        int cmonth=c.get(Calendar.MONTH);
+        int cday=c.get(Calendar.DAY_OF_MONTH);
+        switch (id)
+        {
+            case DATE_DIALOG_ID:
+                return new DatePickerDialog(this,mDateSetListener,cyear,cmonth,cday);
+        }
+        return null;
 
+    }
+    private DatePickerDialog.OnDateSetListener mDateSetListener=new DatePickerDialog.OnDateSetListener(){
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfmonth)
+        {
+            String date_selected=String.valueOf(year)+"/"
+                    +String.valueOf(monthOfYear+1)+"/"
+                    +String.valueOf(dayOfmonth);
+            tgllahir.setText(date_selected);
+        }
+    };
     private void checkRegisterPelanggan(final String namaperusahaan,final String jenisusaha,final String namapelanggan,final String alamatpelanggan, final String kelurahanpelanggan,final String kecamatanpelanggan, final String kotapelanggan, final  String kodepospelanggan
             ,final  String notlppelanggan,final  String nofaxpelanggan,final  String nohppelanggan,final String emailpelanggan ,final String tgllahirpelanggan,final String jklpelanggan,final String pekerjaanpelanggan,final  String noidpelanggan,final  String nonpwppelanggan,final String jenislayanan
             ,final String carapembayaran,final String waktupembayaran,final String tempattinggal,final String idPegawai) {

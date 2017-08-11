@@ -11,10 +11,16 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.*;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -26,23 +32,29 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jogjamedianet.com.jogjamedianet.App.AppController;
 import jogjamedianet.com.jogjamedianet.Prefs.UserInfo;
 import jogjamedianet.com.jogjamedianet.Util.Server;
 
 /**
  * Created by mery on 7/13/2017.
  */
-public class Report  extends AppCompatActivity implements OnChartGestureListener, OnChartValueSelectedListener{
+public class Report  extends AppCompatActivity {
 
-    private String url;
+    private String url=Server.URL+"report.php";
     private static final String TAG = Report.class.getSimpleName();
     private UserInfo session;
     private LineChart mChart;
     String tag_json_obj = "json_obj_req";
     ConnectivityManager conMgr;
-
+    List<com.github.mikephil.charting.data.Entry> x;
+    ArrayList<String> y;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,21 +62,48 @@ public class Report  extends AppCompatActivity implements OnChartGestureListener
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.report);
 
-        url = Server.URL + "report.php";
+//        url = Server.URL + "report.php";
 
         mChart = (LineChart) findViewById(R.id.linechart);
-        mChart.setOnChartGestureListener(this);
-        mChart.setOnChartValueSelectedListener(this);
+        //  mChart.setOnChartGestureListener(this);
+        //  mChart.setOnChartValueSelectedListener(this);
+        mChart.setDrawGridBackground(false);
+        mChart.setDescription("Laporan Jumlah Pelanggan yang Diperoleh Pegawai ");
+        mChart.setTouchEnabled(true);
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(true);
+        mChart.setPinchZoom(true);
+        x = new ArrayList<com.github.mikephil.charting.data.Entry>();
+        y = new ArrayList<String>();
 
+        XAxis xl = mChart.getXAxis();
+        xl.setAvoidFirstLastClipping(true);
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setInverted(false);
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setEnabled(true);
+        // get the legend (only possible after setting data)
 
+        Legend l = mChart.getLegend();
+        l.setForm(Legend.LegendForm.LINE);
+        mChart.getViewPortHandler().setMaximumScaleY(2f);
+        mChart.getViewPortHandler().setMaximumScaleX(2f);
+
+        leftAxis.setAxisMaxValue(7f);
+        leftAxis.setAxisMinValue(0f);
+        mChart.animateX(2500, Easing.EasingOption.EaseInOutQuart);
+        mChart.setExtraLeftOffset(15f);
+        mChart.setExtraRightOffset(15f);
+        //  dont forget to refresh the drawing
+        mChart.invalidate();
         session = new UserInfo(getApplicationContext());
-
         session = new UserInfo(this);
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {
             if (conMgr.getActiveNetworkInfo() != null
                     && conMgr.getActiveNetworkInfo().isAvailable()
                     && conMgr.getActiveNetworkInfo().isConnected()) {
+                ambilData();
             } else {
                 Toast.makeText(getApplicationContext(), "No Internet Connection",
                         Toast.LENGTH_LONG).show();
@@ -80,16 +119,12 @@ public class Report  extends AppCompatActivity implements OnChartGestureListener
         } else {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
-        setData();
 
-        // get the legend (only possible after setting data)
-        Legend l = mChart.getLegend();
 
-        // modify the legend ...
         // l.setPosition(LegendPosition.LEFT_OF_CHART);
-        l.setForm(Legend.LegendForm.LINE);
+
         // no description text
-        mChart.setDescription("Laporan Semua Karyawan");
+  /*      mChart.setDescription("Laporan Semua Karyawan");
         mChart.setNoDataTextDescription("You need to provide data for the chart.");
 
         // enable touch gestures
@@ -100,9 +135,9 @@ public class Report  extends AppCompatActivity implements OnChartGestureListener
         mChart.setScaleEnabled(true);
         // mChart.setScaleXEnabled(true);
         // mChart.setScaleYEnabled(true);
-
-        LimitLine upper_limit = new LimitLine(130f, "Upper Limit");
-        upper_limit.setLineWidth(4f);
+*/
+  //      LimitLine upper_limit = new LimitLine(130f, "Upper Limit");
+       /* upper_limit.setLineWidth(4f);
         upper_limit.enableDashedLine(10f, 10f, 0f);
         upper_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
         upper_limit.setTextSize(10f);
@@ -113,8 +148,7 @@ public class Report  extends AppCompatActivity implements OnChartGestureListener
         lower_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
         lower_limit.setTextSize(10f);
 
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
+          leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
         leftAxis.addLimitLine(upper_limit);
         leftAxis.addLimitLine(lower_limit);
         leftAxis.setAxisMaxValue(220f);
@@ -135,9 +169,10 @@ public class Report  extends AppCompatActivity implements OnChartGestureListener
 
         //  dont forget to refresh the drawing
         mChart.invalidate();
+        */
     }
 
-
+/*
     private ArrayList<String> setXAxisValues(){
         ArrayList<String> xVals = new ArrayList<String>();
         xVals.add("10");
@@ -167,6 +202,7 @@ public class Report  extends AppCompatActivity implements OnChartGestureListener
 
         LineDataSet set1;
 
+
         // create a dataset and give it a type
         set1 = new LineDataSet(yVals, "Nama Pegawai");
 
@@ -194,13 +230,79 @@ public class Report  extends AppCompatActivity implements OnChartGestureListener
         mChart.setData(data);
 
     }
-
+*/
     private void ambilData()
     {
+        String tag_string_req = "req_chart";
 
+        StringRequest strReq = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d(TAG, "Response: " + response);
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject json = jsonArray.getJSONObject(i);
+
+                                String namapegawai = json.getString("NamaPegawai");
+                                String jmlhpelanggan = json.getString("JumlahPelanggan");
+                                //Double.parseDouble(jmlhpelanggan), i)
+                             x.add(new com.github.mikephil.charting.data.Entry(Float.parseFloat(jmlhpelanggan.toString()),i));
+
+                                y.add(namapegawai);
+
+                            }
+                            LineDataSet set1 = new LineDataSet(x, "X : Jumlah Pelanggan yang Diperoleh");
+                            set1.setLineWidth(5f);
+                            set1.setCircleRadius(25f);
+                            set1.setColor(Color.BLACK);
+                            set1.setLineWidth(1f);
+                            set1.setCircleRadius(3f);
+                            set1.setDrawCircleHole(false);
+                            set1.setValueTextSize(9f);
+                            set1.setDrawFilled(true);
+                            set1.setCircleColor(Color.RED);
+                            LineData data = new LineData(y, set1);
+                            mChart.setData(data);
+                            mChart.invalidate();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Error: " + error.getMessage());
+            }
+        });
+        strReq.setRetryPolicy(new RetryPolicy() {
+
+            @Override
+            public void retry(VolleyError arg0) throws VolleyError {
+            }
+
+            @Override
+            public int getCurrentTimeout() {
+                return 0;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 0;
+            }
+        });
+        strReq.setShouldCache(false);
+        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
     }
 
-    @Override
+   /* @Override
     public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
         Log.i("Gesture", "START, x: " + me.getX() + ", y: " + me.getY());
     }
@@ -255,4 +357,5 @@ public class Report  extends AppCompatActivity implements OnChartGestureListener
     public void onNothingSelected() {
         Log.i("Nothing selected", "Nothing selected.");
     }
+    */
 }
