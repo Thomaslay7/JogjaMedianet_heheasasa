@@ -260,7 +260,7 @@ public class Report  extends AppCompatActivity {
                             LineDataSet set1 = new LineDataSet(x, "X : Jumlah Pelanggan yang Diperoleh");
                             set1.setLineWidth(5f);
                             set1.setCircleRadius(25f);
-                            set1.setColor(Color.BLACK);
+                            set1.setColor(Color.CYAN);
                             set1.setLineWidth(1f);
                             set1.setCircleRadius(3f);
                             set1.setDrawCircleHole(false);
