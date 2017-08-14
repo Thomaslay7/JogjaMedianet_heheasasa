@@ -17,7 +17,7 @@ import jogjamedianet.com.jogjamedianet.Prefs.UserInfo;
 public class Home extends AppCompatActivity {
 
     private Button logout,btnlogout;
-    private TextView tvUsername, tvjabatan,tvnamadepan,tvnamabelakang,tvjeniskelamin;
+    private TextView tvUsername, tvjabatan,tvnamadepan,tvnamabelakang,tvjeniskelamin,tvnik;
     private UserInfo userinfo;
 
     public static final String TAG_ID = "id";
@@ -37,21 +37,21 @@ public class Home extends AppCompatActivity {
         btnlogout       =(Button) findViewById(R.id.btnLogOut);
         tvnamadepan     = (TextView)findViewById(R.id.key_namadepan);
         tvnamabelakang  = (TextView)findViewById(R.id.key_namabelakang);
-        tvjeniskelamin   = (TextView)findViewById(R.id.key_jeniskelamin);
+        tvjeniskelamin  = (TextView)findViewById(R.id.key_jeniskelamin);
         tvjabatan       = (TextView)findViewById(R.id.key_jabatan);
-
+        tvnik           =(TextView) findViewById(R.id.txtnik);
       // String username = userinfo.getKeyUsername();
         String namaDepan = userinfo.getKeyNamaDepan();
         String namaBelakang = userinfo.getKeyNamaBelakang();
         String jabatan =userinfo.getKeyJabatan();
         String jeniskelamin = userinfo.getKeyJenisKelamin();
-
+        String nik= userinfo.getKeyNik();
         //tvUsername.setText(username);
         tvnamadepan.setText(namaDepan);
         tvnamabelakang.setText(namaBelakang);
         tvjabatan.setText(jabatan);
         tvjeniskelamin.setText(jeniskelamin);
-
+        tvnik.setText(nik);
         logout.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
@@ -115,24 +115,6 @@ public class Home extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-         //   case R.id.action_settings:
-                // Code you want run when activity is clicked
-                int id = item.getItemId();
-                if (id == R.id.action_settings) {
-                    return true;
-                }
-                userinfo.setLoggin(false);
-                userinfo.clearUserInfo();
-                return  true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-*/
+
 }
 

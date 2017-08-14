@@ -42,7 +42,6 @@
     </LinearLayout>
 
 
-
     <TextView
         android:id="@+id/key_namadepan"
         android:layout_width="match_parent"
@@ -51,9 +50,8 @@
         android:textSize="15dp"
 
         android:textColor="@color/colorPrimaryDark"
-        android:layout_above="@+id/key_jabatan"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="49dp" />" />
+        android:layout_below="@+id/txtnamalengkap"
+        android:layout_toStartOf="@+id/key_namabelakang" />
 
     <TextView
         android:id="@+id/key_namabelakang"
@@ -85,7 +83,7 @@
 android:textColor="@color/colorPrimaryDark"
         android:text="jeniskelamin"
         android:layout_below="@+id/txtjkl"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentEnd="true" />
 
 
     <Button
@@ -95,8 +93,10 @@ android:textColor="@color/colorPrimaryDark"
         android:background="@drawable/buttonshape"
         android:id="@+id/btnReport"
         android:textColorHighlight="@color/colorAccent"
-        android:layout_above="@+id/tb_main"
-        android:layout_toStartOf="@+id/textView2" />
+        android:layout_alignBaseline="@+id/btnLogOut"
+        android:layout_alignBottom="@+id/btnLogOut"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="22dp" />
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
@@ -123,8 +123,9 @@ android:textColor="@color/colorPrimaryDark"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Nama Lengkap Pegawai :"
         android:id="@+id/txtnamalengkap"
-        android:layout_above="@+id/key_namadepan"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -142,30 +143,46 @@ android:textColor="@color/colorPrimaryDark"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Jenis Kelamin :"
         android:id="@+id/txtjkl"
-        android:layout_marginTop="35dp"
         android:layout_below="@+id/key_jabatan"
-        android:layout_alignParentStart="true" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Data Pegawai"
-        android:id="@+id/textView2"
-        android:textColor="#fff"
-        android:shadowColor="@color/colorAccent"
-        android:textSize="18dp"
-        android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/txtnamalengkap" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="  LogOut  "
         android:id="@+id/btnLogOut"
-        android:layout_above="@+id/tb_main"
-        android:layout_toEndOf="@+id/textView2"
         android:textColor="@color/colorAccent"
-        android:background="@drawable/buttonshape"/>
+        android:background="@drawable/buttonshape"
+        android:layout_marginEnd="38dp"
+        android:layout_above="@+id/tb_main"
+        android:layout_alignEnd="@+id/key_namabelakang" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NIK :"
+        android:id="@+id/textView3"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/key_jeniskelamin"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/txtnik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="NIK"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DATA PEGAWAI"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

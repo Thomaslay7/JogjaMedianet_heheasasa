@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -42,9 +43,10 @@ public class RegistrasiPelanggan extends AppCompatActivity {
     ProgressDialog pDialog;
     EditText txtnamaperusahaan,txtjenisusaha,txtnamapelanggan,txtalamatpelanggan,txtkelpelanggan,txtkecpelanggan,txtkotapelanggan,txtkodepospelanggan,txtnotlppelanggan;
     EditText txtnofaxpelanggan,txtnohppelanggan,txtemailpelanggan,txtpekerjaanpelanggan,txtnoidpelanggan,txtnonpwp,txtjenislayanan;
- private    EditText txtnofaxpenagih,txtnohppenagih,txtemailpenagih,txtcarapembayaran,txtwaktupembayaran,txtstatustempattinggal,tgllahir;
+    private  EditText tgllahir;
     Button masukandatapel;
     TextView txtIdPeg;
+    CheckBox internet,tv,tunai,transfer,autodebet,bulanan,tigabulan,enambulan,dubelasbulan,rumah,kontrak,kost;
     private RadioGroup radioSexGroup;
     private RadioButton rbP;
     private RadioButton rbL;
@@ -101,10 +103,19 @@ public class RegistrasiPelanggan extends AppCompatActivity {
         txtpekerjaanpelanggan = (EditText) findViewById(R.id.pekerjaanpelanggan);
         txtnoidpelanggan = (EditText) findViewById(R.id.noidpelanggan);
         txtnonpwp = (EditText) findViewById(R.id.nonpwp);
-        txtjenislayanan= (EditText) findViewById(R.id.jenislayanan);
-        txtcarapembayaran= (EditText) findViewById(R.id.carapembayaran);
-        txtwaktupembayaran= (EditText) findViewById(R.id.waktupembayaran);
-        txtstatustempattinggal= (EditText) findViewById(R.id.statustempattinggal);
+        internet= (CheckBox) findViewById(R.id.cbxinternet);
+        tv= (CheckBox) findViewById(R.id.cbxtv);
+        tunai= (CheckBox) findViewById(R.id.cbxTunai);
+        transfer= (CheckBox) findViewById(R.id.cbxTransfer);
+        autodebet= (CheckBox) findViewById(R.id.cbxAuto);
+        bulanan= (CheckBox) findViewById(R.id.cbxbulanan);
+        tigabulan= (CheckBox) findViewById(R.id.cbxtiga);
+        enambulan= (CheckBox) findViewById(R.id.cbxenam);
+        dubelasbulan= (CheckBox) findViewById(R.id.cbxdua);
+        rumah= (CheckBox) findViewById(R.id.cbxrumah);
+        kontrak= (CheckBox) findViewById(R.id.cbxkontrak);
+        kost= (CheckBox) findViewById(R.id.cbxkost);
+
         radioSexGroup=(RadioGroup)findViewById(R.id.radioGroup);
         tgllahir = (EditText) findViewById(R.id.txttgllahir);
         rbP=(RadioButton)findViewById(R.id.rbPerempuan);
@@ -124,7 +135,10 @@ public class RegistrasiPelanggan extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                if (!validate()) {
 
+                    return;
+                }
 
                 String namaperusahaan = txtnamaperusahaan.getText().toString();
                 String jenisusaha = txtjenisusaha.getText().toString();
@@ -143,19 +157,64 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                 String pekerjaanpelanggan = txtpekerjaanpelanggan.getText().toString();
                 String noidpelanggan= txtnoidpelanggan.getText().toString();
                 String nonpwppelanggan= txtnonpwp.getText().toString();
-                String jenislayanan= txtjenislayanan.getText().toString();
-                String carapembayaran  = txtcarapembayaran.getText().toString();
-                String waktupembayaran = txtwaktupembayaran.getText().toString();
-                String tempattinggal = txtstatustempattinggal.getText().toString();
-
+                String layanan="";
+                String carapembayaran  = "";
+                String waktupembayaran = "";
+                String tempattinggal = "";
                 String jeniskelaminS="";
+                if(tv.isChecked())
+                {
+                    layanan="TV Kabel";
+                }
+                else if(internet.isChecked())
+                {
+                    layanan="Internet";
+                }
+                 if(tunai.isChecked())
+                {
+                   carapembayaran="Tunai";
+                }
+                else if(transfer.isChecked())
+                {
+                    carapembayaran="Transfer Bank";
+                }
+                else if(autodebet.isChecked())
+                {
+                    carapembayaran="Auto Debet Kartu Kredit";
+                }
+                if(kontrak.isChecked())
+                {
+                    tempattinggal="Kontrak";
+                }
+                else if(kost.isChecked())
+                {
+                    tempattinggal="Kost";
+                }
+                else if(rumah.isChecked())
+                {
+                    tempattinggal="Rumah Sendiri";
+                }
+                if(bulanan.isChecked())
+                {
+                   waktupembayaran="Bulanan";
+                }
+                else if(tigabulan.isChecked())
+                {
+                    waktupembayaran="3 Bulanan";
+                }
+
+                if(enambulan.isChecked()) {
+                    waktupembayaran= "6 Bulanan";
+                }
+                else if(dubelasbulan.isChecked()) {
+                    waktupembayaran= "12 Bulanan";
+                }
                 if(rbL.isChecked()) {
                     jeniskelaminS= "Laki - laki";
                 }
                 else if(rbP.isChecked()) {
                     jeniskelaminS= "Perempuan";
                 }
-
                 String idPgw ;
                 idPgw = session.getKeyID().toString();
                // session.setId(idPgw);
@@ -163,7 +222,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                         && conMgr.getActiveNetworkInfo().isAvailable()
                         && conMgr.getActiveNetworkInfo().isConnected()) {
                     checkRegisterPelanggan(namaperusahaan,jenisusaha,namapelanggan,alamatpelanggan,kelurahanpelanggan,kecamatanpelanggan,kotapelanggan,kodepospelanggan
-                            ,notlppelanggan,nofaxpelanggan,nohppelanggan,emailpelanggan ,tgllahirpelanggan,jeniskelaminS,pekerjaanpelanggan,noidpelanggan,nonpwppelanggan,jenislayanan
+                            ,notlppelanggan,nofaxpelanggan,nohppelanggan,emailpelanggan ,tgllahirpelanggan,jeniskelaminS,pekerjaanpelanggan,noidpelanggan,nonpwppelanggan,layanan
                             ,carapembayaran,waktupembayaran,tempattinggal,idPgw);
 
 
@@ -303,5 +362,119 @@ public class RegistrasiPelanggan extends AppCompatActivity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    public boolean validate() {
+        boolean valid = true;
+
+
+        if (txtnamaperusahaan.getText().toString().isEmpty()) {
+            txtnamaperusahaan.setError("Nama Perusahaan tidak boleh kosong");
+            valid = false;
+        } else {
+            txtnamaperusahaan.setError(null);
+        }
+
+        if (txtnamapelanggan.getText().toString().isEmpty()) {
+            txtnamapelanggan.setError("Nama Pelanggan tidak boleh kosong");
+            valid = false;
+        } else {
+            txtnamapelanggan.setError(null);
+        }
+
+        if (txtemailpelanggan.getText().toString().isEmpty() /*|| !android.util.Patterns.EMAIL_ADDRESS.matcher(txtemailpelanggan).matches()*/) {
+            txtemailpelanggan.setError("Email tidak sesuai dengan format");
+            valid = false;
+        } else {
+            txtemailpelanggan.setError(null);
+        }
+
+
+
+
+        if (txtjenisusaha.getText().toString().isEmpty()) {
+            txtjenisusaha.setError("Jenis Usaha tidak boleh kosong");
+            valid = false;
+        } else {
+            txtjenisusaha.setError(null);
+        }
+
+        if (txtnohppelanggan.getText().toString().isEmpty()) {
+            txtnohppelanggan.setError("Nomor HP tidak boleh kosong");
+            valid = false;
+        } else {
+           txtnohppelanggan.setError(null);
+        }
+
+        if (txtnofaxpelanggan.getText().toString().isEmpty() ) {
+            txtnofaxpelanggan.setError("Nomor Fax tidak boleh kosong");
+            valid = false;
+        } else {
+            txtnofaxpelanggan.setError(null);
+        }
+        if (!rbL.isChecked()&&!rbP.isChecked()) {
+            rbL.setError("Jenis kelamin tidak boleh kosong");
+            rbP.setError("Jenis kelamin tidak boleh kosong");
+            valid = false;
+        } else {
+            rbL.setError(null);
+            rbP.setError(null);
+        }
+        if (tgllahir.getText().toString().isEmpty()) {
+            tgllahir.hasFocusable();
+            tgllahir.setError("Tanggal lahir tidak boleh kosong");
+            valid = false;
+        } else {
+            tgllahir.setError(null);
+        }
+        if (txtalamatpelanggan.getText().toString().isEmpty()) {
+            txtalamatpelanggan.setError("Alamat tidak boleh kosong");
+            valid = false;
+        } else {
+            txtalamatpelanggan.setError(null);
+        }
+        if (txtkecpelanggan.getText().toString().isEmpty()) {
+            txtkecpelanggan.setError("Kecamatan  tidak boleh kosong");
+            valid = false;
+        } else {
+            txtkecpelanggan.setError(null);
+        }
+        if (txtkelpelanggan.getText().toString().isEmpty()) {
+            txtkelpelanggan.setError("Kelurahan  tidak boleh kosong");
+            valid = false;
+        } else {
+            txtkelpelanggan.setError(null);
+        }
+        if (txtkodepospelanggan.getText().toString().isEmpty()) {
+            txtkodepospelanggan.setError("Kodepos  tidak boleh kosong");
+            valid = false;
+        } else {
+            txtkodepospelanggan.setError(null);
+        }
+        if (txtkotapelanggan.getText().toString().isEmpty()) {
+            txtkotapelanggan.setError("Kota  tidak boleh kosong");
+            valid = false;
+        } else {
+            txtkotapelanggan.setError(null);
+        }
+        if (txtnonpwp.getText().toString().isEmpty()) {
+            txtnonpwp.setError("NPWP  tidak boleh kosong");
+            valid = false;
+        } else {
+            txtnonpwp.setError(null);
+        }
+        if (txtpekerjaanpelanggan.getText().toString().isEmpty()) {
+            txtpekerjaanpelanggan.setError("Pekerjaan Pelanggan tidak boleh kosong");
+            valid = false;
+        } else {
+            txtpekerjaanpelanggan.setError(null);
+        }
+        if (txtnoidpelanggan.getText().toString().isEmpty()) {
+            txtnoidpelanggan.setError("Nomor Identitas tidak boleh kosong");
+            valid = false;
+        } else {
+            txtnoidpelanggan.setError(null);
+        }
+        return valid;
     }
 }

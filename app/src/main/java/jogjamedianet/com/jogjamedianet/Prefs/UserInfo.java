@@ -46,6 +46,7 @@ public class UserInfo {
     private static final String KEY_CARAPEMBAYARAN="cara_pembayaran";
     private static final String KEY_WAKTUPEMBAYARAN="waktu_pembayaran";
     private static final String KEY_STATUS_TEMPAT_TINGGAL="status_tempat_tinggal";
+    private static final String KEY_NIK="NIK";
     List<subjects> Pelanggan ;
 
     //`pelanggan`(`id`, `namaperusahaan`, `jenis_usaha`, `nama_pelanggan`, `alamatpelanggan`, `kelurahan_pelanggan`,
@@ -56,7 +57,6 @@ public class UserInfo {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
     Context ctx;
-
     public String getKeyIdPelanggan() {
         return prefs.getString(KEY_ID_PELANGGAN,"");
     }
@@ -194,6 +194,10 @@ public class UserInfo {
         editor.putString(KEY_JENIS_KELAMIN, jeniskelamin);
         editor.commit();
     }
+    public void setNIK(String nik){
+        editor.putString(KEY_NIK, nik);
+        editor.commit();
+    }
 
     public void clearUserInfo(){
         editor.clear();
@@ -211,6 +215,11 @@ public class UserInfo {
     public String getKeyJabatan(){return prefs.getString(KEY_JABATAN, "");}
 
     public String getKeyJenisKelamin(){return prefs.getString(KEY_JENIS_KELAMIN, "");}
+
+
+    public  String getKeyNik() {
+        return prefs.getString(KEY_NIK, "");
+    }
 
     public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<String, String>();

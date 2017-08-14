@@ -223,7 +223,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="No Identitas Pelanggan"
+            android:hint="No. KTP/SIM/KITAS/PASPOR"
             android:layout_below="@+id/statustempattinggal"
             android:layout_alignParentStart="true" />
         <EditText
@@ -235,55 +235,137 @@
             android:hint="No NPWP Pelanggan"
             android:layout_below="@+id/noidpelanggan"
             android:layout_alignParentStart="true" />
-        <EditText
+        <TextView
             android:id="@+id/jenislayanan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Layanan"
+            android:textSize="15dp"
+            android:text="Layanan :"
             android:layout_below="@+id/nonpwp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_alignParentStart="true" />
 
 
-        <EditText
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TV Kabel"
+            android:id="@+id/cbxtv"
+            android:layout_below="@+id/jenislayanan"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Internet"
+            android:id="@+id/cbxinternet"
+            android:layout_below="@+id/cbxtv"/>
+
+        <TextView
             android:id="@+id/carapembayaran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cara Pembayaran :"
+            android:textSize="15dp"
+
+            android:textColor="@color/colorPrimaryDark" />
+
+
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Cara Pembayaran"
-            android:layout_below="@+id/txttgllahir"
-            android:layout_alignParentStart="true" />
+            android:text="Tunai"
+            android:id="@+id/cbxTunai"
+            android:layout_below="@+id/carapembayaran"
+            />
 
-        <EditText
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transfer Bank"
+            android:id="@+id/cbxTransfer"
+            android:layout_below="@+id/cbxTunai" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auto Debet Kartu Kredit"
+            android:layout_below="@+id/cbxTransfer"
+            android:id="@+id/cbxAuto" />
+
+        <TextView
             android:id="@+id/waktupembayaran"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Waktu Pembayaran"
-            android:layout_below="@+id/jkelaminpelanggan"
-            android:layout_alignParentStart="true" />
+            android:text="Waktu Pembayaran :"
+            android:textSize="15dp"
 
-        <EditText
-            android:id="@+id/statustempattinggal"
+            android:textColor="@color/colorPrimaryDark" />
+
+            android:textColor="@color/colorPrimaryDark"  />
+
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Status Tempat Tinggal"
-            android:layout_below="@+id/pekerjaanpelanggan"
-            android:layout_alignParentStart="true" />
+            android:text="Bulanan"
+
+            android:layout_below="@+id/waktupembayaran"
+            android:id="@+id/cbxbulanan" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3 Bulanan"
+            android:layout_below="@+id/cbxbulanan"
+            android:id="@+id/cbxtiga" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbxtiga"
+            android:text="6 Bulanan"
+            android:id="@+id/cbxenam" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 Bulanan"
+            android:layout_below="@+id/cbxenam"
+            android:id="@+id/cbxdua" />
+
+        <TextView
+            android:id="@+id/statustempattinggal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Tempat Tinggal :"
+            android:textSize="15dp"
+
+            android:textColor="@color/colorPrimaryDark" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rumah"
+            android:layout_below="@+id/statustempattinggal"
+            android:id="@+id/cbxrumah" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kontrak"
+            android:layout_below="@+id/cbxrumah"
+            android:id="@+id/cbxkontrak" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kost"
+            android:layout_below="@+id/cbxkontrak"
+            android:id="@+id/cbxkost" />
+
         <Button
             android:id="@+id/enterpelanggan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Entry Data"
-            android:background="@color/colorAccent"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/statustempattinggal"
+            android:background="@drawable/shape_button"
+            android:layout_centerInParent="true"
             />
 
         <TextView

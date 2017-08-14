@@ -42,7 +42,6 @@ public class subjects {
     SharedPreferences.Editor editor;
     Context ctx;
 
-
     public static String getKEY_IDPegawai() {
         return KEY_IDPegawai;
     }

@@ -4,11 +4,23 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:weightSum="1">
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/linechart"
         android:layout_width="match_parent"
         android:layout_height="444dp"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:layout_weight="0.93" />
+    <Button
+        android:id="@+id/btnKembali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shape_button"
+
+        />
 </LinearLayout>

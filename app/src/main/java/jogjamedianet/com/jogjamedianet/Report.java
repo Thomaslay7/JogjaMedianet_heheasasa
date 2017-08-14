@@ -1,6 +1,7 @@
 package jogjamedianet.com.jogjamedianet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -8,7 +9,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,9 +31,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,8 +49,10 @@ public class Report  extends AppCompatActivity {
 
     private String url=Server.URL+"report.php";
     private static final String TAG = Report.class.getSimpleName();
+    private Button kembali;
     private UserInfo session;
     private LineChart mChart;
+
     String tag_json_obj = "json_obj_req";
     ConnectivityManager conMgr;
     List<com.github.mikephil.charting.data.Entry> x;
@@ -63,7 +65,7 @@ public class Report  extends AppCompatActivity {
         setContentView(R.layout.report);
 
 //        url = Server.URL + "report.php";
-
+        kembali = (Button) findViewById(R.id.btnKembali);
         mChart = (LineChart) findViewById(R.id.linechart);
         //  mChart.setOnChartGestureListener(this);
         //  mChart.setOnChartValueSelectedListener(this);
@@ -75,13 +77,13 @@ public class Report  extends AppCompatActivity {
         mChart.setPinchZoom(true);
         x = new ArrayList<com.github.mikephil.charting.data.Entry>();
         y = new ArrayList<String>();
-
+        
         XAxis xl = mChart.getXAxis();
         xl.setAvoidFirstLastClipping(true);
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setInverted(false);
         YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setEnabled(true);
+        rightAxis.setEnabled(false);
         // get the legend (only possible after setting data)
 
         Legend l = mChart.getLegend();
@@ -89,9 +91,7 @@ public class Report  extends AppCompatActivity {
         mChart.getViewPortHandler().setMaximumScaleY(2f);
         mChart.getViewPortHandler().setMaximumScaleX(2f);
 
-        leftAxis.setAxisMaxValue(7f);
-        leftAxis.setAxisMinValue(0f);
-        mChart.animateX(2500, Easing.EasingOption.EaseInOutQuart);
+       mChart.animateX(2500, Easing.EasingOption.EaseInOutQuart);
         mChart.setExtraLeftOffset(15f);
         mChart.setExtraRightOffset(15f);
         //  dont forget to refresh the drawing
@@ -120,117 +120,17 @@ public class Report  extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
 
+        kembali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Report.this, Home.class));
 
-        // l.setPosition(LegendPosition.LEFT_OF_CHART);
-
-        // no description text
-  /*      mChart.setDescription("Laporan Semua Karyawan");
-        mChart.setNoDataTextDescription("You need to provide data for the chart.");
-
-        // enable touch gestures
-        mChart.setTouchEnabled(true);
-
-        // enable scaling and dragging
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
-        // mChart.setScaleXEnabled(true);
-        // mChart.setScaleYEnabled(true);
-*/
-  //      LimitLine upper_limit = new LimitLine(130f, "Upper Limit");
-       /* upper_limit.setLineWidth(4f);
-        upper_limit.enableDashedLine(10f, 10f, 0f);
-        upper_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-        upper_limit.setTextSize(10f);
-
-        LimitLine lower_limit = new LimitLine(-30f, "Lower Limit");
-        lower_limit.setLineWidth(4f);
-        lower_limit.enableDashedLine(10f, 10f, 0f);
-        lower_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-        lower_limit.setTextSize(10f);
-
-          leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-        leftAxis.addLimitLine(upper_limit);
-        leftAxis.addLimitLine(lower_limit);
-        leftAxis.setAxisMaxValue(220f);
-        leftAxis.setAxisMinValue(-50f);
-        //leftAxis.setYOffset(20f);
-        leftAxis.enableGridDashedLine(10f, 10f, 0f);
-        leftAxis.setDrawZeroLine(false);
-
-        // limit lines are drawn behind data (and not on top)
-        leftAxis.setDrawLimitLinesBehindData(true);
-
-        mChart.getAxisRight().setEnabled(false);
-
-        //mChart.getViewPortHandler().setMaximumScaleY(2f);
-        //mChart.getViewPortHandler().setMaximumScaleX(2f);
-
-        mChart.animateX(2500, Easing.EasingOption.EaseInOutQuart);
-
-        //  dont forget to refresh the drawing
-        mChart.invalidate();
-        */
+                finish();
+            }
+        });
     }
 
-/*
-    private ArrayList<String> setXAxisValues(){
-        ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("10");
-        xVals.add("20");
-        xVals.add("30");
-        xVals.add("30.5");
-        xVals.add("40");
 
-        return xVals;
-    }
-
-    private ArrayList<com.github.mikephil.charting.data.Entry> setYAxisValues(){
-        ArrayList<com.github.mikephil.charting.data.Entry> yVals = new ArrayList<com.github.mikephil.charting.data.Entry>();
-        yVals.add(new com.github.mikephil.charting.data.Entry(60, 0));
-        yVals.add(new com.github.mikephil.charting.data.Entry(48, 1));
-        yVals.add(new com.github.mikephil.charting.data.Entry(70.5f, 2));
-        yVals.add(new com.github.mikephil.charting.data.Entry(100, 3));
-        yVals.add(new com.github.mikephil.charting.data.Entry(180.9f, 4));
-
-        return yVals;
-    }
-
-    private void setData() {
-        ArrayList<String> xVals = setXAxisValues();
-
-        ArrayList<com.github.mikephil.charting.data.Entry> yVals = setYAxisValues();
-
-        LineDataSet set1;
-
-
-        // create a dataset and give it a type
-        set1 = new LineDataSet(yVals, "Nama Pegawai");
-
-        set1.setFillAlpha(110);
-        // set1.setFillColor(Color.RED);
-
-        // set the line to be drawn like this "- - - - - -"
-        //   set1.enableDashedLine(10f, 5f, 0f);
-        // set1.enableDashedHighlightLine(10f, 5f, 0f);
-        set1.setColor(Color.BLACK);
-        set1.setCircleColor(Color.BLACK);
-        set1.setLineWidth(1f);
-        set1.setCircleRadius(3f);
-        set1.setDrawCircleHole(false);
-        set1.setValueTextSize(9f);
-        set1.setDrawFilled(true);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(set1); // add the datasets
-
-        // create a data object with the datasets
-        LineData data = new LineData(xVals, dataSets);
-
-        // set data
-        mChart.setData(data);
-
-    }
-*/
     private void ambilData()
     {
         String tag_string_req = "req_chart";
@@ -246,18 +146,19 @@ public class Report  extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("result");
-                            for (int i = 0; i < jsonArray.length(); i++) {
+                            for (int i = 0; i < jsonArray.length();  i++) {
                                 JSONObject json = jsonArray.getJSONObject(i);
 
                                 String namapegawai = json.getString("NamaPegawai");
                                 String jmlhpelanggan = json.getString("JumlahPelanggan");
                                 //Double.parseDouble(jmlhpelanggan), i)
-                             x.add(new com.github.mikephil.charting.data.Entry(Float.parseFloat(jmlhpelanggan.toString()),i));
+                                x.add(new com.github.mikephil.charting.data.Entry(Float.parseFloat(jmlhpelanggan.toString()),i));
 
-                                y.add(namapegawai);
+                                y.add(i,namapegawai);
+
 
                             }
-                            LineDataSet set1 = new LineDataSet(x, "X : Jumlah Pelanggan yang Diperoleh");
+                            LineDataSet set1 = new LineDataSet(x, "X :Nama Pegawai     - Y: Jumlah Pegawai yang diperoleh");
                             set1.setLineWidth(5f);
                             set1.setCircleRadius(25f);
                             set1.setColor(Color.CYAN);
@@ -268,6 +169,7 @@ public class Report  extends AppCompatActivity {
                             set1.setDrawFilled(true);
                             set1.setCircleColor(Color.RED);
                             LineData data = new LineData(y, set1);
+
                             mChart.setData(data);
                             mChart.invalidate();
 

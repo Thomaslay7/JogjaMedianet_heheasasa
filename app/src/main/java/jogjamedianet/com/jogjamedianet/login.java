@@ -57,7 +57,7 @@ public class login extends AppCompatActivity {
         public final static String TAG_NAMABELAKANG = "NamaBelakang";
         public final static String TAG_JENISKELAMIN = "JenisKelamin";
         public final static String TAG_JABATAN = "Jabatan";
-
+        public final static String TAG_NIK = "NIK";
         public final static String TAG_ID = "id";
 
         String tag_json_obj = "json_obj_req";
@@ -168,7 +168,7 @@ public class login extends AppCompatActivity {
                             String namabelakang = jObj.getString(TAG_NAMABELAKANG);
                             String jeniskelamin = jObj.getString(TAG_JENISKELAMIN);
                             String jabatan = jObj.getString(TAG_JABATAN);
-
+                            String nik = jObj.getString(TAG_NIK);
 
 
 
@@ -185,6 +185,7 @@ public class login extends AppCompatActivity {
                             userinfo.setNamaBelakang(namabelakang);
                             userinfo.setJenisKelamin(jeniskelamin);
                             userinfo.setJabatan(jabatan);
+                            userinfo.setNIK(nik);
                             Intent intent = new Intent(login.this,Home.class);
 
 
