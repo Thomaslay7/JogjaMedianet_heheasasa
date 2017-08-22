@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,21 +65,22 @@ public class ListPelanggan extends AppCompatActivity {
     ArrayList<HashMap<String, String>> list_data;
     private Intent intent;
     private UserInfo session;
-TextView txt;
+    TextView txt;
     String tag_json_obj = "json_obj_req";
     ConnectivityManager conMgr;
+    SwipeRefreshLayout swLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_pelanggan);
         url = Server.URL + "ListPelanggan.php";
-
+        swLayout = (SwipeRefreshLayout) findViewById(R.id.swlayout);
         lvhape = (RecyclerView) findViewById((R.id.lvhape));
         LinearLayoutManager llm = new LinearLayoutManager((this));
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         lvhape.setLayoutManager(llm);
-txt=(TextView) findViewById(R.id.txt);
+        txt=(TextView) findViewById(R.id.txt);
         requestQueue = Volley.newRequestQueue(ListPelanggan.this);
 
 
@@ -85,6 +88,7 @@ txt=(TextView) findViewById(R.id.txt);
 
         session = new UserInfo(this);
 
+        swLayout.setRefreshing(false);
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {
             if (conMgr.getActiveNetworkInfo() != null
@@ -102,11 +106,50 @@ txt=(TextView) findViewById(R.id.txt);
                 && conMgr.getActiveNetworkInfo().isAvailable()
                 && conMgr.getActiveNetworkInfo().isConnected()) {
 
-        cek(idPgw);
+            cek(idPgw);
 
         } else {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
+
+
+        // Mengeset properti warna yang berputar pada SwipeRefreshLayout
+
+        swLayout.setColorSchemeResources(R.color.white,R.color.colorBlue);
+
+        swLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+
+            public void onRefresh() {
+
+
+
+                // Handler untuk menjalankan jeda selama 5 detik
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override public void run() {
+
+
+                        String idPgw;
+                        idPgw = session.getKeyID().toString();
+
+                        // Berhenti berputar/refreshing
+                        cek(idPgw);
+
+                        swLayout.setRefreshing(false);
+                    }
+
+                }, 3000);
+
+            }
+
+        });
+
+
+
+
 
 
 
@@ -153,7 +196,7 @@ txt=(TextView) findViewById(R.id.txt);
         list_data = new ArrayList<HashMap<String, String>>();
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        pDialog.setMessage("Load Data...");
+        pDialog.setMessage("Tunggu Sebentar...");
         showDialog();
 
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

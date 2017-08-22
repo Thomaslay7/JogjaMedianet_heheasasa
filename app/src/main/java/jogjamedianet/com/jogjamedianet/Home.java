@@ -55,7 +55,7 @@ public class Home extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
-                                          startActivity(new Intent(Home.this, Report.class));
+                                          startActivity(new Intent(Home.this, waktu.class));
 
                                           finish();
                                       }
