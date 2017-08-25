@@ -75,7 +75,6 @@ public class ListPelanggan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_pelanggan);
         url = Server.URL + "ListPelanggan.php";
-        swLayout = (SwipeRefreshLayout) findViewById(R.id.swlayout);
         lvhape = (RecyclerView) findViewById((R.id.lvhape));
         LinearLayoutManager llm = new LinearLayoutManager((this));
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -88,7 +87,6 @@ public class ListPelanggan extends AppCompatActivity {
 
         session = new UserInfo(this);
 
-        swLayout.setRefreshing(false);
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {
             if (conMgr.getActiveNetworkInfo() != null
@@ -102,6 +100,7 @@ public class ListPelanggan extends AppCompatActivity {
         String idPgw;
         idPgw = session.getKeyID().toString();
 
+        //MENGECEK APAKAH KONEKSI INTERNET ADA ATAU TIDAK
         if (conMgr.getActiveNetworkInfo() != null
                 && conMgr.getActiveNetworkInfo().isAvailable()
                 && conMgr.getActiveNetworkInfo().isConnected()) {
@@ -111,42 +110,6 @@ public class ListPelanggan extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
-
-
-        // Mengeset properti warna yang berputar pada SwipeRefreshLayout
-
-        swLayout.setColorSchemeResources(R.color.white,R.color.colorBlue);
-
-        swLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-
-            public void onRefresh() {
-
-
-
-                // Handler untuk menjalankan jeda selama 5 detik
-
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override public void run() {
-
-
-                        String idPgw;
-                        idPgw = session.getKeyID().toString();
-
-                        // Berhenti berputar/refreshing
-                        cek(idPgw);
-
-                        swLayout.setRefreshing(false);
-                    }
-
-                }, 3000);
-
-            }
-
-        });
-
 
 
 
@@ -183,7 +146,7 @@ public class ListPelanggan extends AppCompatActivity {
 
 
     }
-
+//PROSEDUR CEK BERFUNGSI UNTUK MEMANGGIL DATA PELANGGAN BERDASARKAN ID PEGAWAI (USER)
     public void cek(final String idpeg) {
 
         final String namaperu, namapel, jenis,id;
@@ -199,6 +162,7 @@ public class ListPelanggan extends AppCompatActivity {
         pDialog.setMessage("Tunggu Sebentar...");
         showDialog();
 
+
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -207,6 +171,9 @@ public class ListPelanggan extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("result");
+
+                    //SEMUA DATA DITAMPILKAN DENGAN JSON ARRAY. SEDANGKAN YANG DITAMPILKAN TERGANTUNG YANG DI PUT.
+
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject json = jsonArray.getJSONObject(i);
                         HashMap<String, String> map = new HashMap<String, String>();
@@ -215,7 +182,7 @@ public class ListPelanggan extends AppCompatActivity {
                         map.put("jenis_usaha", json.getString("jenis_usaha"));
                         map.put("nama_pelanggan", json.getString("nama_pelanggan"));
                         map.put("ID_Pegawai", idpeg);
-                       // txt.setText(json.getString("namaperusahaan"));
+                       // MENAMBAH DATA YANG TELAH DI GET DIATAS PADA LIST DATA (CLASS ADAPTER ITEM)
                         list_data.add(map);
                         AdapterList adapter = new AdapterList(ListPelanggan.this, list_data);
                         lvhape.setAdapter(adapter);
@@ -238,6 +205,8 @@ public class ListPelanggan extends AppCompatActivity {
 
             }
         }) {
+
+
             @Override
             protected HashMap<String, String> getParams() {
                 // Posting parameters to login url
@@ -255,6 +224,7 @@ public class ListPelanggan extends AppCompatActivity {
 
         };
 
+        //MEREQUEST DATA DENGAN VOLLEY
         AppController.getInstance().addToRequestQueue(stringRequest, tag_json_obj);
     }
 
@@ -287,321 +257,3 @@ public class ListPelanggan extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-   //===================================================================================================================
-   /*
-    List<UserInfo> subjectsList;
-
-    int success;
-    ConnectivityManager conMgr;
-    String myJSON;
-    JsonArrayRequest jsonArrayRequest ;
-
-    ProgressDialog pDialog;
-    private String url = Server.URL + "ListPelanggan.php";
-
-    private static final String TAG = ListPelanggan.class.getSimpleName();
-    private static final String TAG_RESULTS="result";
-
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
-    private static final String TAG_JENISUSAHA = "jenis_usaha";
-    private static final String TAG_NAMAPELANGGAN = "nama_pelanggan";
-    private static final String TAG_NAMAPERUSAHAAN = "namaperusahaan";
-    JSONArray peoples = null;
-    ArrayList<HashMap<String, String>> personList;
-    String tag_json_obj = "json_obj_req";
-
-    private ArrayList<subjects> PelangganItems = new ArrayList<subjects>();
-
-    ListView list;
-    private RecyclerView rvView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private Toolbar toolbar;
-    //  private Call<APIOrderListPengajar> callGuru;
-    // private RestClient.GitApiInterface service;
-
-    //  private ArrayList<APIOrderListPengajar.ResponBean> GuruItems = new ArrayList<APIOrderListPengajar.ResponBean>();
-    private String idp;
-    private String namadepan;
-    private String namabelakang;
-    private String tempatlahir;
-    private String tanggallahir;
-    private String jeniskelamin;
-    private String nomortlp;
-    private String emailmurid;
-    private String alamatmurid;
-    private Intent intent;
-    private UserInfo userinfo;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_pelanggan);
-        list = (ListView) findViewById(R.id.listView);
-        userinfo = new UserInfo(getApplicationContext());
-        userinfo        = new UserInfo(this);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        this.setSupportActionBar(toolbar);
-        rvView = (RecyclerView) findViewById(R.id.rv_main);
-        rvView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        rvView.setLayoutManager(layoutManager);
-        rvView.setLayoutManager(layoutManager);
-        rvView.setAdapter(adapter);
-        idp=userinfo.getKeyID();
-        String idpeg=idp;
-        fetchData(idpeg);
-      /*  if (conMgr.getActiveNetworkInfo() != null
-                && conMgr.getActiveNetworkInfo().isAvailable()
-                && conMgr.getActiveNetworkInfo().isConnected()) {
-
-        } else {
-            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-
-        }
-    personList = new ArrayList<HashMap<String,String>>();
-        //getData();
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener
-        (
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_favorites:
-                                intent = new Intent(ListPelanggan.this, ListPelanggan.class);
-                                startActivity(intent);
-                                break;
-
-                            case R.id.action_schedules:
-                                intent = new Intent(ListPelanggan.this,RegistrasiPelanggan.class);
-                                startActivity(intent);
-                                break;
-                            case R.id.action_music:
-                                intent = new Intent(ListPelanggan.this, Home.class);
-                                startActivity(intent);
-                                break;
-
-                        }
-                        return true;
-                    }
-                });
-
-
-
-    }
-
-
-
-
- /*   public void getData(){
-        class GetDataJSON extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected String doInBackground(String... params) {
-                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpPost httppost = new HttpPost(url);
-
-                // Depends on your web service
-                httppost.setHeader("Content-type", "application/json");
-
-                InputStream inputStream = null;
-                String result = null;
-                try {
-                    HttpResponse response = httpclient.execute(httppost);
-                    HttpEntity entity = response.getEntity();
-
-                    inputStream = entity.getContent();
-                    // json is UTF-8 by default
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-                    StringBuilder sb = new StringBuilder();
-
-                    String line = null;
-                    while ((line = reader.readLine()) != null)
-                    {
-                        sb.append(line + "\n");
-                    }
-                    result = sb.toString();
-                } catch (Exception e) {
-                    // Oops
-                }
-                finally {
-                    try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
-                }
-                return result;
-            }
-
-            @Override
-            protected void onPostExecute(String result){
-                myJSON=result;
-                showList();
-            }
-        }
-        GetDataJSON g = new GetDataJSON();
-        g.execute();
-    }
-
-
-    protected void showList(){
-        try {
-            JSONObject jsonObj = new JSONObject(myJSON);
-            peoples = jsonObj.getJSONArray(TAG_RESULTS);
-
-            for(int i=0;i<peoples.length();i++){
-                JSONObject c = peoples.getJSONObject(i);
-                String jenisusaha = c.getString(TAG_JENISUSAHA);
-                String namapel = c.getString(TAG_NAMAPELANGGAN);
-                String namaperu = c.getString(TAG_NAMAPERUSAHAAN);
-
-                HashMap<String,String> persons = new HashMap<String,String>();
-
-                persons.put(TAG_NAMAPERUSAHAAN,namaperu);
-                persons.put(TAG_JENISUSAHA,jenisusaha);
-                persons.put(TAG_NAMAPELANGGAN,namapel);
-
-                personList.add(persons);
-            }
-
-            ListAdapter adapter = new SimpleAdapter(
-                    ListPelanggan.this, personList, R.layout.cardview,
-                    new String[]{TAG_NAMAPERUSAHAAN,TAG_JENISUSAHA,TAG_NAMAPELANGGAN},
-                    new int[]{R.id.txtnamaperusahaan, R.id.txtjenisusaha, R.id.txtnamapelanggan}
-            );
-
-            list.setAdapter(adapter);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    public void fetchData(String id)
-    {
-        pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
-        pDialog.setMessage("Register ...");
-        showDialog();
-      //  JSONArray array;
-        StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.e(TAG, "List Pelangan Response: " + response.toString());
-                hideDialog();
-
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    success = jObj.getInt(TAG_SUCCESS);
-                    JSONArray jArray = new JSONArray();
-                    String namaperusahaan= userinfo.getKeyNamaperusahaan();
-                    String namapelanggan = userinfo.getKeyNamapelanggan();
-                    String jenisusaha =userinfo.getKeyJenisusaha();
-                    // Check for error node in json
-                    if (success == 1) {
-
-                        Log.e("Data Pelanggan Anda...", jObj.toString());
-
-                        Toast.makeText(getApplicationContext(),
-                                jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
-
-                        ArrayList<String> animalNames = new ArrayList<>();
-                        animalNames.add(namaperusahaan);
-
-                       // PelangganItems.add();
-                  //      subjectsList.add(userinfo);
-
-                   //     recyclerViewadapter = new RecyclerViewCardViewAdapter(subjectsList, this);
-
-                   //     recyclerView.setAdapter(recyclerViewadapter);
-
-                    } else {
-                        Toast.makeText(getApplicationContext(),
-                                jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
-
-                    }
-                } catch (JSONException e) {
-                    // JSON error
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-
-                hideDialog();
-
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting parameters to login url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("namaperusahaan", namadepan);
-                params.put("nama_pelanggan", namabelakang);
-              /*  params.put("jenis_usaha", jabatan);
-                params.put("jeniskelamin",jk );
-                params.put("username", username);
-                params.put("password", password);
-                params.put("confirm_password", confirm_password);
-
-                return params;
-            }
-
-        };
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
-    }
-
-
-            private void showDialog() {
-                if (!pDialog.isShowing())
-                    pDialog.show();
-            }
-
-            private void hideDialog() {
-                if (pDialog.isShowing())
-                    pDialog.dismiss();
-            }
-
-            @Override
-            public boolean onOptionsItemSelected(MenuItem item) {
-                // Handle presses on the action bar items
-                switch (item.getItemId()) {
-                    case R.id.action_settings:
-                        // Code you want run when activity is clicked
-
-                        userinfo.setLoggin(false);
-                        userinfo.clearUserInfo();
-                        return true;
-                    default:
-                        return super.onOptionsItemSelected(item);
-                }
-            }
-
-
-    @Override
-    public void onItemClick(View view, int position) {
-
-    }
-    */
-//}
-

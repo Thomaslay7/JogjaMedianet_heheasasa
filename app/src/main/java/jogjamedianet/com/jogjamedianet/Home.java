@@ -16,7 +16,7 @@ import java.util.HashMap;
 import jogjamedianet.com.jogjamedianet.Prefs.UserInfo;
 public class Home extends AppCompatActivity {
 
-    private Button logout,btnlogout;
+    private Button report,btnlogout;
     private TextView tvUsername, tvjabatan,tvnamadepan,tvnamabelakang,tvjeniskelamin,tvnik;
     private UserInfo userinfo;
 
@@ -33,14 +33,16 @@ public class Home extends AppCompatActivity {
         userinfo = new UserInfo(getApplicationContext());
 
         userinfo        = new UserInfo(this);
-        logout          = (Button)findViewById(R.id.btnReport);
+        report         = (Button)findViewById(R.id.btnReport);
         btnlogout       =(Button) findViewById(R.id.btnLogOut);
         tvnamadepan     = (TextView)findViewById(R.id.key_namadepan);
         tvnamabelakang  = (TextView)findViewById(R.id.key_namabelakang);
         tvjeniskelamin  = (TextView)findViewById(R.id.key_jeniskelamin);
         tvjabatan       = (TextView)findViewById(R.id.key_jabatan);
         tvnik           =(TextView) findViewById(R.id.txtnik);
-      // String username = userinfo.getKeyUsername();
+
+     //membuat variabel untuk menampung variabel text yang akan di set dengan data yang sesuai pada sharedprefence / user info
+
         String namaDepan = userinfo.getKeyNamaDepan();
         String namaBelakang = userinfo.getKeyNamaBelakang();
         String jabatan =userinfo.getKeyJabatan();
@@ -52,10 +54,10 @@ public class Home extends AppCompatActivity {
         tvjabatan.setText(jabatan);
         tvjeniskelamin.setText(jeniskelamin);
         tvnik.setText(nik);
-        logout.setOnClickListener(new View.OnClickListener() {
+        report.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
-                                          startActivity(new Intent(Home.this, waktu.class));
+                                          startActivity(new Intent(Home.this, Report.class));
 
                                           finish();
                                       }

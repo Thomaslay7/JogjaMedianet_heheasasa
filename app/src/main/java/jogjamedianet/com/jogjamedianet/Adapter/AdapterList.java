@@ -22,6 +22,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
     Context context;
     private UserInfo session;
 
+    //menangkap data
     ArrayList<HashMap<String,String>> list_data;
     public AdapterList(ListPelanggan listpelanggan, ArrayList<HashMap<String,String>>list_data)
     {
@@ -37,6 +38,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
         return  new  ViewHolder(view);
     }
 
+    //onBindViewHolder berguna untuk menampilkan item data beserta posisi nya
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
      //   Glide.with(context)
@@ -47,9 +49,9 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
         session= new UserInfo(context);
         //String peru= list_data.get();
       //  holder.txtpel.setText(list_data.get(position).get("id"));
-        holder.txtnamaperu.setText(list_data.get(position).get("namaperusahaan"));
-        holder.txtjenisusaha.setText(list_data.get(position).get("jenis_usaha"));
-        holder.txtnamapel.setText(list_data.get(position).get("nama_pelanggan"));
+        holder.txtnamaperu.setText( list_data.get(position).get("namaperusahaan"));
+        holder.txtjenisusaha.setText("Jenis Usaha : "+list_data.get(position).get("jenis_usaha"));
+        holder.txtnamapel.setText("Nama Pelanggan : "+list_data.get(position).get("nama_pelanggan"));
     //    holder.txtid.setText(list_data.get(position).get("ID_Pegawai"));
 
 

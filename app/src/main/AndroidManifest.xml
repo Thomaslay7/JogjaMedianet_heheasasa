@@ -25,7 +25,7 @@
         <activity android:name=".Home" />
         <activity android:name=".RegistrasiPelanggan" />
         <activity android:name=".ListPelanggan" />
-        <activity android:name=".waktu"></activity>
+        <activity android:name=".Report"></activity>
     </application>
 
 </manifest>

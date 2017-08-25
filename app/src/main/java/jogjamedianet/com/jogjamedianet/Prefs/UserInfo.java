@@ -7,8 +7,6 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.List;
 
-import jogjamedianet.com.jogjamedianet.subjects;
-
 /**
  * Created by mery on 7/13/2017.
  */
@@ -47,7 +45,6 @@ public class UserInfo {
     private static final String KEY_WAKTUPEMBAYARAN="waktu_pembayaran";
     private static final String KEY_STATUS_TEMPAT_TINGGAL="status_tempat_tinggal";
     private static final String KEY_NIK="NIK";
-    List<subjects> Pelanggan ;
 
     //`pelanggan`(`id`, `namaperusahaan`, `jenis_usaha`, `nama_pelanggan`, `alamatpelanggan`, `kelurahan_pelanggan`,
     // `kec_pelanggan`, `kota_pelanggan`, `kodepos_pelanggan`, `no_telp_pelanggan`, `no_fax_pelanggan`, `no_hp_pelanggan`,
@@ -145,11 +142,7 @@ public class UserInfo {
         return prefs.getString(KEY_STATUS_TEMPAT_TINGGAL,"");
     }
 
-    public List<subjects> getPelanggan()
-    {
-        //function to return the final populated list
-        return Pelanggan;
-    }
+
     public void setLoggin(boolean isLoggedin){
         editor.putBoolean(KEY_IS_LOGGED_IN, isLoggedin);
 

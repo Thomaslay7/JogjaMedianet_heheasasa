@@ -33,7 +33,7 @@ public class login extends AppCompatActivity {
 
 
 
-        private UserInfo userinfo;
+        private UserInfo userinfo; //CLASS USER INFO ADALAH CLASS YANG BERISI UNTUK MENYIMPAN DATA (SHARED PREFERENCE)
 
         ProgressDialog pDialog;
         Button btn_register, btn_login;
@@ -83,8 +83,6 @@ public class login extends AppCompatActivity {
             txt_username = (EditText) findViewById(R.id.txt_username);
             txt_password = (EditText) findViewById(R.id.txt_password);
 
-            // Session manager
-          //  session = new UserSession(getApplicationContext());
             userinfo = new UserInfo(getApplicationContext());
             // Check if user is already logged in or not
             if (userinfo.isLoggedin()) {
@@ -94,6 +92,7 @@ public class login extends AppCompatActivity {
                 finish();
             }
 
+            //AKSI YANG AKAN DILAKUKAN JIKA MENEKAN TOMBOL LOGIN
             btn_login.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -107,6 +106,7 @@ public class login extends AppCompatActivity {
                         if (conMgr.getActiveNetworkInfo() != null
                                 && conMgr.getActiveNetworkInfo().isAvailable()
                                 && conMgr.getActiveNetworkInfo().isConnected()) {
+                            //JIKA INPUTAN TIDAK KOSONG MAKA AKAN DICEK, APAKAH DATA YANG DI INPUTKAN ADA PADA SERVER.
                             checkLogin(username, password);
                         } else {
                             Toast.makeText(getApplicationContext() ,"No Internet Connection", Toast.LENGTH_LONG).show();
@@ -131,6 +131,7 @@ public class login extends AppCompatActivity {
 
         }
 
+    //FUNGSI INI DIGUNAKAN UNTUK MERUBAH TULISAN PADA INPUT PASSWORD MENJADI TEXT TIPE PASSWORD
     public void setPasswordVisibility(View v)
     {
         EditText txtPassword = (EditText)findViewById(R.id.txt_password);
@@ -140,7 +141,7 @@ public class login extends AppCompatActivity {
         else
             txtPassword.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
     }
-
+//FUNGSI INI DIGUNAKAN UNTUK CHECK LOGIN / LOGIN
     private void checkLogin(final String username, final String password) {
             pDialog = new ProgressDialog(this);
             pDialog.setCancelable(false);
@@ -150,6 +151,7 @@ public class login extends AppCompatActivity {
 
             StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
+                //MENYESUAIKAN RESPOND YANG ADA PADA PHP
                 @Override
                 public void onResponse(String response) {
                     Log.e(TAG, "Login Response: " + response.toString());
@@ -221,6 +223,7 @@ public class login extends AppCompatActivity {
                 }
             }) {
 
+                //MEMASUKAN DATA YANG DI POST MENGGUNAKAN HASHMAP DAN MENYESUAIKANNYA DENGAN NAMA KOLOM YANG ADA PADA DATABASE.
                 @Override
                 protected Map<String, String> getParams() {
                     // Posting parameters to login url
@@ -233,7 +236,7 @@ public class login extends AppCompatActivity {
 
             };
 
-            // Adding request to request queue
+            // MEMINTA REQUEST DATA DENGAN VOLLEY
             AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
         }
 

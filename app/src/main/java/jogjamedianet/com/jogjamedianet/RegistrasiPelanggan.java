@@ -217,7 +217,8 @@ public class RegistrasiPelanggan extends AppCompatActivity {
                 }
                 String idPgw ;
                 idPgw = session.getKeyID().toString();
-               // session.setId(idPgw);
+
+               // mengecheck apakah koneksi terhubung dengan internet atau tidak.
                 if (conMgr.getActiveNetworkInfo() != null
                         && conMgr.getActiveNetworkInfo().isAvailable()
                         && conMgr.getActiveNetworkInfo().isConnected()) {
@@ -238,6 +239,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
         });
 
     }
+    //format tanggal
     protected Dialog onCreateDialog(int id)
     {
         Calendar c= Calendar.getInstance();
@@ -252,6 +254,8 @@ public class RegistrasiPelanggan extends AppCompatActivity {
         return null;
 
     }
+
+    //ketika edit text di klik maka akan muncul kalender.
     private DatePickerDialog.OnDateSetListener mDateSetListener=new DatePickerDialog.OnDateSetListener(){
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfmonth)
         {
@@ -261,6 +265,10 @@ public class RegistrasiPelanggan extends AppCompatActivity {
             tgllahir.setText(date_selected);
         }
     };
+
+
+
+    //PROSEDUR / FUNGSI CHECKLOGINPELANGGAN ADALAH UNTUK MENGECHECK REGRISTASI PELANGGAN YANG DI INPUTKAN
     private void checkRegisterPelanggan(final String namaperusahaan,final String jenisusaha,final String namapelanggan,final String alamatpelanggan, final String kelurahanpelanggan,final String kecamatanpelanggan, final String kotapelanggan, final  String kodepospelanggan
             ,final  String notlppelanggan,final  String nofaxpelanggan,final  String nohppelanggan,final String emailpelanggan ,final String tgllahirpelanggan,final String jklpelanggan,final String pekerjaanpelanggan,final  String noidpelanggan,final  String nonpwppelanggan,final String jenislayanan
             ,final String carapembayaran,final String waktupembayaran,final String tempattinggal,final String idPegawai) {
@@ -271,6 +279,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
+            //PROSEDUR INI DIGUNAKAN UNTUK MENYAMAKAN RESPOND YANG TERJADI PADA PHP DENGAN YANG ADA DI ANDROID. SEHINGGA DAPAT DATANYA.
             @Override
             public void onResponse(String response) {
                 Log.e(TAG, "Register Response: " + response.toString());
@@ -315,6 +324,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
             }
         }) {
 
+            //MENGINISIALISASI PARAMETER INPUTAN DENGAN NAMA YANG ADA PADA KOLOM NAMA TABEL PELANGGAN
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
@@ -350,7 +360,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
 
         };
 
-        // Adding request to request queue
+        // MENAMBAH REQUEST DATA DENGAN VOLLEY DALAM BENTUK JSON OBJECT.
         AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
     }
 
@@ -364,6 +374,7 @@ public class RegistrasiPelanggan extends AppCompatActivity {
             pDialog.dismiss();
     }
 
+    //PROSEDUR VALIDATE BERFUNGSI UNTUK MEMVALIDASI APAKAH ADA YANG BELUM DI INPUTKAN ATAU SUDAH.
     public boolean validate() {
         boolean valid = true;
 
