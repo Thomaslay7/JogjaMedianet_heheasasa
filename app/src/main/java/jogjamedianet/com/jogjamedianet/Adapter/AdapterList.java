@@ -1,11 +1,14 @@
 package jogjamedianet.com.jogjamedianet.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.HashMap;
 import jogjamedianet.com.jogjamedianet.ListPelanggan;
 import jogjamedianet.com.jogjamedianet.Prefs.UserInfo;
 import jogjamedianet.com.jogjamedianet.R;
+import jogjamedianet.com.jogjamedianet.detil;
 
 /**
  * Created by mery on 7/29/2017.
@@ -40,7 +44,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
 
     //onBindViewHolder berguna untuk menampilkan item data beserta posisi nya
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
      //   Glide.with(context)
               /*  .crossFade()
                 .placeHolder(R.mipmap.ic_launcher)
@@ -54,9 +58,21 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
         holder.txtnamapel.setText("Nama Pelanggan : "+list_data.get(position).get("nama_pelanggan"));
     //    holder.txtid.setText(list_data.get(position).get("ID_Pegawai"));
 
+        holder.item.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Bundle extras = new Bundle();
+                extras.putString("namaperusahaan",holder.txtnamaperu.getText().toString());
+                extras.putString("jenis_usaha",holder.txtjenisusaha.getText().toString());
+                extras.putString("nama_pelanggan",holder.txtnamapel.getText().toString());
+                Intent intent = new Intent(context, detil.class);
+                intent.putExtras(extras);
+                context.startActivity(intent);
+        }});
+
 
     }
-
     @Override
     public int getItemCount() {
         return list_data.size();
@@ -66,6 +82,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
     {
 
         TextView txtid,txtnamaperu,txtnamapel,txtjenisusaha,txtpel;
+        RelativeLayout item;
 
         public ViewHolder(View itemView)
         {
@@ -75,6 +92,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.ViewHolder>{
             txtnamaperu=(TextView) itemView.findViewById(R.id.txtnamaperusahaan);
             txtnamapel=(TextView) itemView.findViewById(R.id.txtnamapelanggan);
             txtjenisusaha=(TextView) itemView.findViewById(R.id.txtjenisusaha);
+            this.item = (RelativeLayout) itemView.findViewById(R.id.item);
         }
     }
 }
